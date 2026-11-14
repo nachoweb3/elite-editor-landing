@@ -19,11 +19,29 @@
 			property="og:description"
 			content="Timeline, IA y 191 recursos en el navegador. Gratis mientras dure la beta. Construida en codigoelite.eu por nacho_web3."
 		/>
-		<meta property="og:image" content="assets/og.jpg" />
+		<meta property="og:url" content="https://nachoweb3.github.io/elite-editor-landing/" />
+		<meta property="og:image" content="https://nachoweb3.github.io/elite-editor-landing/assets/og.jpg" />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content="Elite Editor: la landing con el editor y su timeline" />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content="Elite Editor · Beta abierta, gratis" />
 		<meta name="twitter:description" content="Edita vídeo en el navegador. Beta gratis, sin cuenta." />
-		<meta name="twitter:image" content="assets/og.jpg" />
+		<meta name="twitter:image" content="https://nachoweb3.github.io/elite-editor-landing/assets/og.jpg" />
+		<script type="application/ld+json">
+			{
+				"@context": "https://schema.org",
+				"@type": "SoftwareApplication",
+				"name": "Elite Editor",
+				"applicationCategory": "MultimediaApplication",
+				"operatingSystem": "Navegador web con WebAssembly",
+				"url": "https://nachoweb3.github.io/elite-editor-landing/",
+				"description": "Editor de vídeo con timeline multipista, asistente IA y 191 recursos CC0, en el navegador.",
+				"offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+				"author": { "@type": "Person", "name": "nacho_web3", "url": "https://www.codigoelite.eu" },
+				"screenshot": "https://nachoweb3.github.io/elite-editor-landing/assets/og.jpg"
+			}
+		</script>
 
 		<link rel="icon" href="assets/elite-mark.svg" type="image/svg+xml" />
 		<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png" />
@@ -36,8 +54,8 @@
 			rel="stylesheet"
 			href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap"
 		/>
-		<link rel="stylesheet" href="assets/styles.css?v=2026-11-14f" />
-		<script src="assets/app.js?v=2026-11-14f" defer></script>
+		<link rel="stylesheet" href="assets/styles.css?v=2026-11-14g" />
+		<script src="assets/app.js?v=2026-11-14g" defer></script>
 	</head>
 	<body>
 		<div class="ambient" aria-hidden="true">
@@ -45,6 +63,8 @@
 			<div class="ambient__grid"></div>
 			<div class="ambient__grain"></div>
 		</div>
+
+		<a class="skip" href="#top">Saltar al contenido</a>
 
 		<header class="nav">
 			<a class="brand" href="#top" aria-label="Elite Editor, inicio">
@@ -56,8 +76,8 @@
 			</a>
 			<nav class="nav__links" aria-label="Secciones">
 				<a href="#sistema">Sistema</a>
-				<a href="#beta">Beta</a>
-									<a href="#dentro">Todo</a>
+									<a href="#beta">Beta</a>
+					<a href="#dentro">Todo</a>
 					<a href="#acceso">Acceso</a>
 				<a href="#creditos">Autoría</a>
 			</nav>

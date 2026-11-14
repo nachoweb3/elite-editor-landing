@@ -184,6 +184,25 @@ img {
 	animation: ping 2.8s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
+.skip {
+	position: absolute;
+	left: -9999px;
+	top: 0;
+	z-index: 40;
+	padding: 10px 16px;
+	border-radius: 0 0 12px 0;
+	background: var(--lime);
+	color: #0a0c12;
+	font-size: 12px;
+	font-weight: 600;
+}
+
+.skip:focus-visible {
+	left: 0;
+	outline: 2px solid #fff;
+	outline-offset: 2px;
+}
+
 /* ---------------------------------------------------------------- buttons */
 .btn {
 	display: inline-flex;
@@ -1266,12 +1285,34 @@ img {
 }
 
 @media (max-width: 720px) {
+	.nav {
+		flex-wrap: wrap;
+		gap: 12px;
+		padding: 16px 18px 8px;
+	}
+
+	/* En móvil no se ocultan los enlaces: se reparten en una fila desplazable. */
 	.nav__links {
+		order: 3;
+		width: 100%;
+		gap: 20px;
+		padding: 0 0 4px;
+		font-size: 12px;
+		overflow-x: auto;
+		scrollbar-width: none;
+	}
+
+	.nav__links::-webkit-scrollbar {
 		display: none;
 	}
 
-	.nav {
-		padding: 18px 18px;
+	.nav__links a {
+		padding: 4px 0;
+		white-space: nowrap;
+	}
+
+	.nav__actions .pill {
+		display: none;
 	}
 
 	.hero {
