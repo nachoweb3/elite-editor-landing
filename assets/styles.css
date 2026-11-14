@@ -1223,6 +1223,10 @@ img {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
 
+	.specs {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
 	.chip {
 		display: block;
 	}
@@ -1305,7 +1309,17 @@ img {
 	}
 
 	.notes__k {
-		font-size: 9.5px;
+		font-size: 10px;
+		color: #8b94a7;
+	}
+
+	.section__head p {
+		font-size: 14px;
+		color: #8b94a7;
+	}
+
+	.spec h3 span {
+		font-size: 10.5px;
 	}
 
 	.notes p:last-child {
