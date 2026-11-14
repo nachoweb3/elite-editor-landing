@@ -774,6 +774,103 @@ img {
 	background: rgba(216, 255, 107, 0.75);
 }
 
+/* -------------------------------------------------------------- descargas */
+.downloads {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 12px;
+}
+
+.download {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	padding: 20px 22px;
+	border: 1px solid var(--line-strong);
+	border-radius: var(--radius);
+	background: rgba(8, 11, 18, 0.85);
+	transition:
+		border-color 0.2s ease,
+		background 0.2s ease,
+		transform 0.2s ease;
+}
+
+.download:hover {
+	border-color: rgba(216, 255, 107, 0.55);
+	background: rgba(216, 255, 107, 0.07);
+	transform: translateY(-2px);
+}
+
+.download__os {
+	display: block;
+	font-size: 17px;
+	font-weight: 600;
+	letter-spacing: -0.01em;
+}
+
+.download__meta {
+	display: block;
+	margin-top: 5px;
+	font-family: var(--mono);
+	font-size: 9.5px;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--ink-dim);
+}
+
+.download__go {
+	display: grid;
+	place-items: center;
+	width: 36px;
+	height: 36px;
+	flex: 0 0 auto;
+	border: 1px solid var(--line-strong);
+	border-radius: 50%;
+	color: var(--lime);
+	font-size: 15px;
+	transition:
+		background 0.2s ease,
+		color 0.2s ease;
+}
+
+.download:hover .download__go {
+	border-color: var(--lime);
+	background: var(--lime);
+	color: #0a0c12;
+}
+
+.dlnotes {
+	margin-top: 14px;
+	padding: 18px 20px;
+	border: 1px dashed var(--line-strong);
+	border-radius: var(--radius);
+	font-size: 12.5px;
+	line-height: 1.6;
+	color: var(--ink-soft);
+}
+
+.dlnotes p {
+	margin: 0;
+}
+
+.dlnotes p + p {
+	margin-top: 8px;
+	font-size: 12px;
+}
+
+.dlnotes strong {
+	color: #fff;
+}
+
+.dlnotes a {
+	color: var(--lime);
+}
+
+.dlnotes a:hover {
+	text-decoration: underline;
+}
+
 /* ---------------------------------------------------------- specs / detail */
 .specs {
 	display: grid;
@@ -1276,6 +1373,10 @@ img {
 		grid-template-columns: repeat(3, minmax(0, 1fr));
 	}
 
+	.downloads {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
 	.beta__state {
 		grid-template-columns: repeat(3, minmax(0, 1fr));
 	}
@@ -1372,6 +1473,27 @@ img {
 	.notes p:last-child {
 		font-size: 14px;
 		line-height: 1.6;
+	}
+
+	.downloads {
+		gap: 10px;
+	}
+
+	.download {
+		padding: 18px;
+	}
+
+	.download__meta {
+		font-size: 9px;
+		letter-spacing: 0.1em;
+	}
+
+	.dlnotes {
+		font-size: 13.5px;
+	}
+
+	.dlnotes p + p {
+		font-size: 13px;
 	}
 }
 

@@ -54,8 +54,8 @@
 			rel="stylesheet"
 			href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap"
 		/>
-		<link rel="stylesheet" href="assets/styles.css?v=2026-11-14i" />
-		<script src="assets/app.js?v=2026-11-14i" defer></script>
+		<link rel="stylesheet" href="assets/styles.css?v=2026-11-14j" />
+		<script src="assets/app.js?v=2026-11-14j" defer></script>
 	</head>
 	<body>
 		<div class="ambient" aria-hidden="true">
@@ -78,12 +78,12 @@
 				<a href="#sistema">Sistema</a>
 									<a href="#beta">Beta</a>
 					<a href="#dentro">Todo</a>
-					<a href="#acceso">Acceso</a>
+					<a href="#descargar">Descargar</a>
 				<a href="#creditos">Autoría</a>
 			</nav>
 			<div class="nav__actions">
 				<span class="pill"><span class="pill__dot" aria-hidden="true"></span>BETA · 0 €</span>
-				<a class="btn btn--primary" href="#acceso">Entrar <span aria-hidden="true">→</span></a>
+				<a class="btn btn--primary" href="#descargar">Descargar <span aria-hidden="true">↓</span></a>
 			</div>
 		</header>
 
@@ -105,7 +105,7 @@
 						cuenta ni tarjeta.
 					</p>
 					<div class="hero__cta reveal">
-						<a class="btn btn--primary" href="#acceso">Entrar a la beta <span aria-hidden="true">→</span></a>
+						<a class="btn btn--primary" href="#descargar">Descargar gratis <span aria-hidden="true">↓</span></a>
 						<a class="btn btn--ghost" href="#beta">Ver el estado</a>
 					</div>
 					<p class="hero__fine reveal">SIN REGISTRO · SIN MARCA DE AGUA · BETA GRATUITA</p>
@@ -342,7 +342,7 @@
 					<p class="kicker kicker--lime">Beta testing abierto</p>
 					<div class="beta__head">
 						<h2>Gratis para todos,<span>mientras dure la beta.</span></h2>
-						<a class="btn btn--primary" href="#acceso">Probar ahora <span aria-hidden="true">→</span></a>
+						<a class="btn btn--primary" href="#descargar">Probar ahora <span aria-hidden="true">↓</span></a>
 					</div>
 					<p class="beta__lead">
 						No pedimos correo ni tarjeta. Pedimos uso real: monta un vídeo, expórtalo y dinos
@@ -378,6 +378,59 @@
 				</div>
 			</section>
 
+			<section class="section" id="descargar">
+				<div class="section__head reveal">
+					<h2>Descárgalo y<span>pruébalo hoy.</span></h2>
+					<p>Un paquete por sistema y el mismo editor dentro. Beta gratis, sin cuenta ni tarjeta.</p>
+				</div>
+				<div class="downloads">
+					<a
+						class="download reveal"
+						href="https://github.com/nachoweb3/elite-editor-landing/releases/download/v0.1.0-beta/elite-editor-windows.zip"
+						rel="noopener"
+					>
+						<span>
+							<span class="download__os">Windows</span>
+							<span class="download__meta">ZIP · 5,7 MB · start.bat</span>
+						</span>
+						<span class="download__go" aria-hidden="true">↓</span>
+					</a>
+					<a
+						class="download reveal"
+						href="https://github.com/nachoweb3/elite-editor-landing/releases/download/v0.1.0-beta/elite-editor-macos.zip"
+						rel="noopener"
+					>
+						<span>
+							<span class="download__os">macOS</span>
+							<span class="download__meta">ZIP · 5,7 MB · start.sh</span>
+						</span>
+						<span class="download__go" aria-hidden="true">↓</span>
+					</a>
+					<a
+						class="download reveal"
+						href="https://github.com/nachoweb3/elite-editor-landing/releases/download/v0.1.0-beta/elite-editor-linux.zip"
+						rel="noopener"
+					>
+						<span>
+							<span class="download__os">Linux</span>
+							<span class="download__meta">ZIP · 5,7 MB · start.sh</span>
+						</span>
+						<span class="download__go" aria-hidden="true">↓</span>
+					</a>
+				</div>
+				<div class="dlnotes reveal">
+					<p>
+						<strong>Antes de descargar:</strong> necesitas Bun 1.2 o Node 22, Chrome o Edge
+						actualizados y unos 2 GB libres. Descomprime el ZIP y ejecuta el lanzador de tu
+						sistema; la primera vez instala dependencias y después arranca en segundos.
+					</p>
+					<p>
+						<a href="#acceso">Ver los pasos manuales</a> ·
+						<a href="https://github.com/nachoweb3/elite-editor-landing/releases/tag/v0.1.0-beta" target="_blank" rel="noopener">Notas de la versión ↗</a>
+					</p>
+				</div>
+			</section>
+
 			<section class="section" id="acceso">
 				<div class="section__head reveal">
 					<h2>Entrar es literalmente eso</h2>
@@ -391,8 +444,8 @@
 						<p class="access__num">01 · versión local</p>
 						<h3>Arrancarlo en tu equipo</h3>
 						<p>
-							Clona el proyecto, instala dependencias y levanta el servidor. Guía completa en
-							<code>docs/GETTING_STARTED.es.md</code>.
+							Descarga el paquete de arriba y ejecuta su lanzador, o hazlo a mano: instala
+							dependencias y levanta el servidor con este comando.
 						</p>
 						<button class="copy" type="button" data-copy="bun run dev">
 							<code>$ bun run dev</code><span>copiar</span>
