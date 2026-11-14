@@ -26,8 +26,9 @@
 }
 
 html {
-	scroll-behavior: smooth;
-	overflow-x: hidden;
+	/* `clip` recorta sin convertir la raíz en contenedor de scroll: con
+	   `overflow-x: hidden` los saltos a anclas dejaban de funcionar. */
+	overflow-x: clip;
 	-webkit-text-size-adjust: 100%;
 }
 
@@ -197,7 +198,7 @@ img {
 	font-weight: 600;
 }
 
-.skip:focus-visible {
+.skip:focus {
 	left: 0;
 	outline: 2px solid #fff;
 	outline-offset: 2px;
@@ -1375,10 +1376,6 @@ img {
 }
 
 @media (prefers-reduced-motion: reduce) {
-	html {
-		scroll-behavior: auto;
-	}
-
 	*,
 	*::before,
 	*::after {
