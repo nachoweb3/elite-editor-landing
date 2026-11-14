@@ -1,0 +1,14 @@
+{
+	"name": "Elite Editor",
+	"short_name": "Elite",
+	"description": "Edita vídeo en el navegador con timeline, subtítulos y asistente IA. Beta abierta y gratuita.",
+	"start_url": "./",
+	"display": "standalone",
+	"background_color": "#04050a",
+	"theme_color": "#7b2ff7",
+	"icons": [
+		{ "src": "assets/favicon-192.png", "sizes": "192x192", "type": "image/png" },
+		{ "src": "assets/favicon-512.png", "sizes": "512x512", "type": "image/png" },
+		{ "src": "assets/elite-mark.svg", "sizes": "any", "type": "image/svg+xml" }
+	]
+}
