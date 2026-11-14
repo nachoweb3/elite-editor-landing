@@ -1,0 +1,838 @@
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#03040b;color:#e6eeff;font-family:system-ui}a{text-decoration:none}button,input{font:inherit}img,video{max-width:100%}#abrir-editor{scroll-margin-top:5rem}#abrir-editor p{line-height:1.7}#abrir-editor a:focus-visible{outline:2px solid #5effc8} @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+/* ==========================================================================
+   XENO — visual language of Elite Editor
+   Bioluminescent signals on an indigo void: glass panels with HUD corners,
+   drifting auroras, energy borders and technical type. Fonts are system fonts
+   shipped with Windows (Bahnschrift, Cascadia), so nothing is downloaded.
+   Colour decoration is scoped to the dark theme; motion respects
+   prefers-reduced-motion.
+   ========================================================================== */
+
+:root {
+	--xeno-mint: #5effc8;
+	--xeno-cyan: #38e8ff;
+	--xeno-violet: #a78bfa;
+	--xeno-uv: #7c3aed;
+	--xeno-amber: #ffc46b;
+	--xeno-rose: #ff5c8a;
+	--xeno-void: #03040b;
+	--xeno-ink: #070a18;
+	--xeno-holo: linear-gradient(100deg, #5effc8, #38e8ff 32%, #a78bfa 66%, #5effc8);
+	--xeno-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+	--xeno-font-display: "Bahnschrift", "Segoe UI Variable Display", "DIN Alternate", "Barlow Semi Condensed", "Arial Narrow", system-ui, sans-serif;
+	--xeno-font-text: "Segoe UI Variable Text", "Segoe UI", "Inter", system-ui, -apple-system, sans-serif;
+	--xeno-font-mono: "Cascadia Code", "Cascadia Mono", "JetBrains Mono", "SF Mono", Consolas, monospace;
+	/* Tailwind reads these for font-sans / font-mono. */
+	--font-inter: var(--xeno-font-text);
+	--font-mono: var(--xeno-font-mono);
+}
+
+/* ------------------------------- Dark tokens ------------------------------ */
+
+.dark {
+	--background: hsl(234 52% 4%);
+	--foreground: hsl(205 45% 93%);
+	--card: hsl(233 44% 7%);
+	--card-foreground: hsl(205 45% 93%);
+	--popover: hsl(234 46% 7%);
+	--popover-hover: hsl(240 40% 14%);
+	--popover-foreground: hsl(205 50% 96%);
+	--primary: hsl(160 100% 68%);
+	--primary-foreground: hsl(234 60% 6%);
+	--secondary: hsl(160 100% 68% / 0.1);
+	--secondary-border: hsl(160 100% 68% / 0.35);
+	--secondary-foreground: hsl(160 100% 76%);
+	--muted: hsl(234 32% 15%);
+	--muted-foreground: hsl(228 22% 66%);
+	--accent: hsl(255 80% 70% / 0.12);
+	--accent-foreground: hsl(205 55% 97%);
+	--destructive: hsl(345 100% 66%);
+	--constructive: hsl(160 100% 60%);
+	--caution: hsl(38 100% 70%);
+	--border: hsl(238 60% 80% / 0.11);
+	--input: hsl(234 44% 9%);
+	--ring: hsl(160 100% 68%);
+	--sidebar-background: hsl(234 46% 6%);
+	--sidebar: hsl(234 46% 6%);
+	color-scheme: dark;
+}
+.dark .panel {
+	--background: hsl(234 44% 7%);
+	--foreground: hsl(205 42% 91%);
+	--card: hsl(234 44% 8%);
+	--muted: hsl(234 30% 17%);
+	--accent: hsl(255 80% 70% / 0.12);
+	--border: hsl(238 60% 80% / 0.1);
+	--input: hsl(234 40% 11%);
+}
+
+/* ------------------------------ Base & void ------------------------------- */
+
+.xeno {
+	font-feature-settings: "ss01", "cv11";
+	letter-spacing: 0.005em;
+}
+.xeno ::selection {
+	background: rgb(94 255 200 / 0.35);
+	color: #fff;
+}
+.dark body.xeno {
+	background:
+		radial-gradient(1200px 700px at 12% -10%, rgb(124 58 237 / 0.22), transparent 60%),
+		radial-gradient(900px 600px at 100% 110%, rgb(56 232 255 / 0.12), transparent 60%),
+		var(--xeno-void);
+}
+/* Aurora: two soft light fields drifting slowly behind every surface. */
+.dark body.xeno::before {
+	content: "";
+	position: fixed;
+	inset: -25%;
+	z-index: -1;
+	pointer-events: none;
+	background:
+		radial-gradient(38% 30% at 30% 40%, rgb(94 255 200 / 0.09), transparent 70%),
+		radial-gradient(34% 28% at 70% 60%, rgb(167 139 250 / 0.11), transparent 70%),
+		radial-gradient(26% 22% at 55% 20%, rgb(56 232 255 / 0.07), transparent 70%);
+	animation: xeno-drift 46s ease-in-out infinite alternate;
+	will-change: transform;
+}
+/* Perspective grid and film grain, barely there. */
+.dark body.xeno::after {
+	content: "";
+	position: fixed;
+	inset: 0;
+	z-index: -1;
+	pointer-events: none;
+	opacity: 0.55;
+	background:
+		linear-gradient(rgb(140 150 255 / 0.035) 1px, transparent 1px) 0 0 / 46px 46px,
+		linear-gradient(90deg, rgb(140 150 255 / 0.035) 1px, transparent 1px) 0 0 / 46px 46px,
+		url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .05 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+	mask-image: radial-gradient(ellipse at center, #000 30%, transparent 85%);
+}
+.dark .xeno-shell {
+	background: transparent;
+}
+
+/* --------------------------------- Panels --------------------------------- */
+
+.dark .xeno .panel {
+	position: relative;
+	border-radius: 14px;
+	border-color: rgb(150 160 255 / 0.13);
+	background:
+		linear-gradient(180deg, rgb(16 19 44 / 0.82), rgb(7 9 24 / 0.86));
+	backdrop-filter: blur(16px) saturate(140%);
+	box-shadow:
+		inset 0 1px 0 rgb(255 255 255 / 0.05),
+		inset 0 0 40px rgb(124 58 237 / 0.05),
+		0 24px 60px -36px rgb(0 0 0 / 0.95);
+}
+/* HUD corner brackets. */
+.dark .xeno .panel::before {
+	content: "";
+	position: absolute;
+	inset: 2px;
+	z-index: 30;
+	pointer-events: none;
+	opacity: 0.8;
+	background:
+		linear-gradient(var(--xeno-mint), var(--xeno-mint)) top left / 10px 1.5px,
+		linear-gradient(var(--xeno-mint), var(--xeno-mint)) top left / 1.5px 10px,
+		linear-gradient(var(--xeno-violet), var(--xeno-violet)) bottom right / 10px 1.5px,
+		linear-gradient(var(--xeno-violet), var(--xeno-violet)) bottom right / 1.5px 10px;
+	background-repeat: no-repeat;
+}
+/* Energy seam travelling along the top edge. */
+.dark .xeno .panel::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 10%;
+	right: 10%;
+	height: 1px;
+	z-index: 30;
+	pointer-events: none;
+	background: linear-gradient(90deg, transparent, var(--xeno-mint), var(--xeno-cyan), var(--xeno-violet), transparent);
+	background-size: 200% 100%;
+	opacity: 0.6;
+	animation: xeno-sweep 7s linear infinite;
+}
+
+/* -------------------------------- Header ---------------------------------- */
+
+.dark .xeno-header {
+	position: relative;
+	background: linear-gradient(180deg, rgb(10 12 30 / 0.7), transparent);
+}
+.dark .xeno-header::after {
+	content: "";
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 1px;
+	background: linear-gradient(90deg, transparent 2%, rgb(94 255 200 / 0.45), rgb(167 139 250 / 0.45), transparent 98%);
+}
+.xeno-wordmark {
+	font-family: var(--xeno-font-display);
+	font-weight: 600;
+	font-size: 0.72rem;
+	letter-spacing: 0.32em;
+	text-transform: uppercase;
+	background: var(--xeno-holo);
+	background-size: 220% 100%;
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+	animation: xeno-holo 9s linear infinite;
+}
+.xeno-status {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	font-family: var(--xeno-font-mono);
+	font-size: 0.62rem;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: rgb(205 220 255 / 0.55);
+}
+
+/* -------------------------------- Buttons --------------------------------- */
+
+.dark .xeno-primary {
+	color: #031015;
+	background-color: transparent;
+	background-image: var(--xeno-holo);
+	background-size: 220% 100%;
+	font-weight: 600;
+	box-shadow: 0 0 0 1px rgb(94 255 200 / 0.5), 0 6px 22px -8px rgb(94 255 200 / 0.7);
+	transition: background-position 0.6s var(--xeno-ease), box-shadow 0.3s var(--xeno-ease), transform 0.2s var(--xeno-ease);
+}
+.dark .xeno-primary:hover {
+	background-color: transparent;
+	background-position: 100% 0;
+	box-shadow: 0 0 0 1px rgb(94 255 200 / 0.8), 0 10px 32px -8px rgb(56 232 255 / 0.85);
+	transform: translateY(-1px);
+}
+.dark .xeno-primary:active {
+	transform: translateY(0) scale(0.98);
+}
+.dark .xeno-outline {
+	background: rgb(255 255 255 / 0.025);
+	border-color: rgb(167 139 250 / 0.28);
+	backdrop-filter: blur(6px);
+	transition: border-color 0.25s, box-shadow 0.25s, background 0.25s, transform 0.2s;
+}
+.dark .xeno-outline:hover {
+	background: rgb(94 255 200 / 0.07);
+	border-color: rgb(94 255 200 / 0.6);
+	box-shadow: 0 0 18px -4px rgb(94 255 200 / 0.55), inset 0 0 12px rgb(94 255 200 / 0.08);
+	color: #eafff8;
+}
+.dark .xeno-secondary {
+	background: rgb(94 255 200 / 0.1);
+	border-color: rgb(94 255 200 / 0.45);
+	color: var(--xeno-mint);
+	box-shadow: 0 0 16px -4px rgb(94 255 200 / 0.6), inset 0 0 10px rgb(94 255 200 / 0.12);
+}
+.dark .xeno-ghost:hover {
+	background: rgb(167 139 250 / 0.1);
+	color: #f2ecff;
+}
+
+/* Export: a holographic core with an energy ring orbiting its border. */
+.xeno-export {
+	position: relative;
+	isolation: isolate;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.45rem;
+	padding: 0.42rem 1.05rem;
+	border-radius: 999px;
+	font-family: var(--xeno-font-display);
+	font-weight: 600;
+	font-size: 0.8rem;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: #031015;
+	background: var(--xeno-holo);
+	background-size: 220% 100%;
+	animation: xeno-holo 6s linear infinite;
+	box-shadow: 0 0 24px -6px rgb(94 255 200 / 0.8);
+	overflow: hidden;
+}
+.xeno-export::before {
+	content: "";
+	position: absolute;
+	inset: -150%;
+	z-index: -1;
+	background: conic-gradient(from 0deg, transparent 0 70%, rgb(255 255 255 / 0.9) 80%, transparent 90%);
+	animation: xeno-spin 3.2s linear infinite;
+	mix-blend-mode: overlay;
+}
+.xeno-export:hover {
+	box-shadow: 0 0 34px -4px rgb(56 232 255 / 0.95);
+}
+
+.dark .xeno-pill {
+	border-radius: 999px;
+	font-family: var(--xeno-font-display);
+	letter-spacing: 0.08em;
+	border-color: rgb(167 139 250 / 0.35);
+	background: linear-gradient(90deg, rgb(124 58 237 / 0.18), rgb(56 232 255 / 0.08));
+}
+.dark .xeno-pill:hover {
+	border-color: rgb(94 255 200 / 0.7);
+	box-shadow: 0 0 22px -6px rgb(167 139 250 / 0.9);
+}
+
+/* ---------------------------------- Tabs ---------------------------------- */
+
+.xeno-tab {
+	position: relative;
+	transition: color 0.2s, transform 0.2s var(--xeno-ease), background 0.2s;
+}
+.xeno-tab:hover {
+	transform: translateX(1px);
+}
+.dark .xeno-tab[data-active="true"] {
+	color: var(--xeno-mint);
+	background: radial-gradient(circle at 50% 50%, rgb(94 255 200 / 0.22), rgb(94 255 200 / 0.04) 70%);
+	box-shadow: inset 0 0 0 1px rgb(94 255 200 / 0.45), 0 0 16px -2px rgb(94 255 200 / 0.6);
+}
+.dark .xeno-tab[data-active="true"]::before {
+	content: "";
+	position: absolute;
+	left: -5px;
+	top: 22%;
+	bottom: 22%;
+	width: 2px;
+	border-radius: 2px;
+	background: var(--xeno-mint);
+	box-shadow: 0 0 10px var(--xeno-mint);
+}
+
+/* --------------------------------- Fields --------------------------------- */
+
+.dark .xeno input:not([type="range"]):not([type="checkbox"]):not([type="radio"]):not([type="color"]):not([type="file"]),
+.dark .xeno select,
+.dark .xeno textarea {
+	background-color: rgb(8 10 26 / 0.75);
+	border-color: rgb(150 160 255 / 0.16);
+	transition: border-color 0.2s, box-shadow 0.2s;
+}
+.dark .xeno input:not([type="range"]):not([type="checkbox"]):focus-visible,
+.dark .xeno select:focus-visible,
+.dark .xeno textarea:focus-visible {
+	border-color: rgb(94 255 200 / 0.7);
+	box-shadow: 0 0 0 3px rgb(94 255 200 / 0.14), 0 0 18px -6px rgb(94 255 200 / 0.8);
+	outline: none;
+}
+.xeno input[type="checkbox"],
+.xeno input[type="radio"] {
+	accent-color: var(--xeno-mint);
+}
+.xeno input[type="range"] {
+	-webkit-appearance: none;
+	appearance: none;
+	height: 18px;
+	background: transparent;
+	cursor: pointer;
+}
+.xeno input[type="range"]::-webkit-slider-runnable-track {
+	height: 3px;
+	border-radius: 99px;
+	background: linear-gradient(90deg, rgb(94 255 200 / 0.75), rgb(167 139 250 / 0.75));
+}
+.xeno input[type="range"]::-moz-range-track {
+	height: 3px;
+	border-radius: 99px;
+	background: linear-gradient(90deg, rgb(94 255 200 / 0.75), rgb(167 139 250 / 0.75));
+}
+.xeno input[type="range"]::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	width: 14px;
+	height: 14px;
+	margin-top: -5.5px;
+	border-radius: 50%;
+	background: radial-gradient(circle, #ffffff 0 30%, #c9fff0 31% 100%);
+	box-shadow: 0 0 0 3px rgb(94 255 200 / 0.22), 0 0 14px rgb(94 255 200 / 0.9);
+	transition: transform 0.15s;
+}
+.xeno input[type="range"]::-moz-range-thumb {
+	width: 14px;
+	height: 14px;
+	border: 0;
+	border-radius: 50%;
+	background: #d9fff4;
+	box-shadow: 0 0 0 3px rgb(94 255 200 / 0.22), 0 0 14px rgb(94 255 200 / 0.9);
+}
+.xeno input[type="range"]:active::-webkit-slider-thumb {
+	transform: scale(1.25);
+}
+.xeno input[type="range"]:disabled {
+	opacity: 0.4;
+	cursor: not-allowed;
+}
+
+/* ------------------------------- Scrollbars ------------------------------- */
+
+.dark .xeno * {
+	scrollbar-width: thin;
+	scrollbar-color: rgb(167 139 250 / 0.35) transparent;
+}
+.dark .xeno ::-webkit-scrollbar {
+	width: 7px;
+	height: 7px;
+}
+.dark .xeno ::-webkit-scrollbar-thumb {
+	border-radius: 99px;
+	background: linear-gradient(180deg, rgb(94 255 200 / 0.4), rgb(167 139 250 / 0.4));
+}
+.dark .xeno ::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+/* --------------------------- Overlays & dialogs --------------------------- */
+
+.dark .xeno [role="dialog"],
+.dark .xeno [role="menu"],
+.dark .xeno [role="listbox"],
+.dark .xeno [data-radix-popper-content-wrapper] > div {
+	border-color: rgb(150 160 255 / 0.18);
+	box-shadow: 0 30px 80px -30px rgb(0 0 0 / 0.95), 0 0 0 1px rgb(94 255 200 / 0.06), 0 0 40px -18px rgb(124 58 237 / 0.7);
+}
+.dark .xeno [role="dialog"] {
+	background: linear-gradient(160deg, rgb(18 21 50 / 0.96), rgb(6 8 22 / 0.97));
+	backdrop-filter: blur(20px);
+}
+
+/* Resize handles glow when you reach for them. */
+.dark .xeno [data-panel-resize-handle-id]::after {
+	transition: background 0.2s, box-shadow 0.2s;
+}
+.dark .xeno [data-panel-resize-handle-id]:hover::after,
+.dark .xeno [data-panel-resize-handle-id][data-resize-handle-state="drag"]::after {
+	background: linear-gradient(var(--xeno-mint), var(--xeno-violet));
+	box-shadow: 0 0 12px var(--xeno-mint);
+}
+
+/* ------------------------------ Assistant kit ----------------------------- */
+
+.xeno-card {
+	position: relative;
+	border-radius: 14px;
+	border: 1px solid transparent;
+	background:
+		linear-gradient(170deg, rgb(20 24 56 / 0.72), rgb(8 10 26 / 0.8)) padding-box,
+		linear-gradient(135deg, rgb(94 255 200 / 0.4), rgb(150 160 255 / 0.08) 38%, rgb(150 160 255 / 0.06) 62%, rgb(167 139 250 / 0.45)) border-box;
+	box-shadow: 0 18px 40px -30px rgb(0 0 0 / 0.9);
+	transition: box-shadow 0.35s var(--xeno-ease), transform 0.35s var(--xeno-ease);
+	animation: xeno-rise 0.55s var(--xeno-ease) both;
+	animation-delay: calc(var(--i, 0) * 60ms);
+}
+.xeno-card:hover {
+	box-shadow: 0 18px 40px -30px rgb(0 0 0 / 0.9), 0 0 28px -14px rgb(94 255 200 / 0.55);
+}
+:root:not(.dark) .xeno-card {
+	background: linear-gradient(170deg, #ffffff, #f4f6ff) padding-box, linear-gradient(135deg, #5effc8, #e4e7ff 40%, #a78bfa) border-box;
+}
+.xeno-heading {
+	display: flex;
+	align-items: center;
+	gap: 0.55rem;
+	font-family: var(--xeno-font-display);
+	font-weight: 600;
+	font-size: 0.74rem;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	color: rgb(226 236 255 / 0.95);
+}
+.xeno-heading[data-index]::before {
+	content: attr(data-index);
+	display: inline-grid;
+	place-items: center;
+	min-width: 1.45rem;
+	height: 1.45rem;
+	border-radius: 7px;
+	font-family: var(--xeno-font-mono);
+	font-size: 0.62rem;
+	letter-spacing: 0;
+	color: #04110d;
+	background: var(--xeno-holo);
+	background-size: 220% 100%;
+	box-shadow: 0 0 14px -2px rgb(94 255 200 / 0.75);
+}
+.xeno-holo-text {
+	background: var(--xeno-holo);
+	background-size: 220% 100%;
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+	animation: xeno-holo 10s linear infinite;
+}
+.xeno-kicker {
+	font-family: var(--xeno-font-mono);
+	font-size: 0.6rem;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	color: rgb(94 255 200 / 0.75);
+}
+.xeno-mono {
+	font-family: var(--xeno-font-mono);
+	font-variant-numeric: tabular-nums;
+}
+/* Rotating orbit glyph: the assistant's "presence". */
+.xeno-orbit {
+	position: relative;
+	width: 34px;
+	height: 34px;
+	flex: none;
+	border-radius: 50%;
+	background: radial-gradient(circle, #eafff8 0 14%, rgb(94 255 200 / 0.55) 15% 26%, transparent 27%);
+	box-shadow: 0 0 22px -4px rgb(94 255 200 / 0.8);
+}
+.xeno-orbit::before,
+.xeno-orbit::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	border-radius: 50%;
+	border: 1px solid rgb(94 255 200 / 0.55);
+	border-left-color: transparent;
+	border-bottom-color: transparent;
+	animation: xeno-spin 2.8s linear infinite;
+}
+.xeno-orbit::after {
+	inset: 5px;
+	border-color: rgb(167 139 250 / 0.8);
+	border-right-color: transparent;
+	border-top-color: transparent;
+	animation-duration: 1.9s;
+	animation-direction: reverse;
+}
+.xeno-orbit[data-busy="true"]::before {
+	animation-duration: 0.9s;
+}
+.xeno-orbit[data-busy="true"]::after {
+	animation-duration: 0.6s;
+}
+.xeno-dot {
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	display: inline-block;
+	background: currentColor;
+	box-shadow: 0 0 10px currentColor;
+}
+.xeno-dot[data-live="true"] {
+	animation: xeno-pulse 1.6s ease-in-out infinite;
+}
+.xeno-progress {
+	position: relative;
+	height: 6px;
+	border-radius: 99px;
+	overflow: hidden;
+	background: rgb(150 160 255 / 0.12);
+	box-shadow: inset 0 0 0 1px rgb(150 160 255 / 0.12);
+}
+.xeno-progress > span {
+	position: absolute;
+	inset: 0 auto 0 0;
+	border-radius: 99px;
+	background: var(--xeno-holo);
+	background-size: 200% 100%;
+	box-shadow: 0 0 14px rgb(94 255 200 / 0.8);
+	animation: xeno-holo 2.4s linear infinite;
+	transition: width 0.5s var(--xeno-ease);
+}
+.xeno-progress > span::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.7), transparent);
+	background-size: 40% 100%;
+	background-repeat: no-repeat;
+	animation: xeno-shimmer 1.4s ease-in-out infinite;
+}
+.xeno-progress[data-indeterminate="true"] > span {
+	width: 35%;
+	animation: xeno-holo 2.4s linear infinite, xeno-scan 1.6s var(--xeno-ease) infinite;
+}
+.xeno-map {
+	filter: drop-shadow(0 0 6px rgb(94 255 200 / 0.35));
+}
+.xeno-chip {
+	border-radius: 999px;
+	border: 1px solid rgb(150 160 255 / 0.2);
+	background: rgb(255 255 255 / 0.03);
+	font-family: var(--xeno-font-mono);
+	font-size: 0.62rem;
+	letter-spacing: 0.04em;
+	transition: border-color 0.2s, box-shadow 0.2s, color 0.2s;
+}
+button.xeno-chip:hover {
+	border-color: rgb(94 255 200 / 0.6);
+	color: var(--xeno-mint);
+	box-shadow: 0 0 14px -4px rgb(94 255 200 / 0.8);
+}
+/* Never sets position: dialogs using it must stay `fixed`; static hosts add `relative`. */
+.xeno-scanlines::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	background: repeating-linear-gradient(180deg, rgb(255 255 255 / 0.025) 0 1px, transparent 1px 3px);
+	mix-blend-mode: overlay;
+}
+
+/* ------------------------------ Project tiles ----------------------------- */
+
+.dark .xeno-tile {
+	border-radius: 16px;
+	transition: transform 0.4s var(--xeno-ease), box-shadow 0.4s var(--xeno-ease), border-color 0.3s;
+}
+.dark .xeno-tile:hover {
+	transform: translateY(-4px) rotateX(2deg);
+	box-shadow: 0 30px 60px -30px rgb(0 0 0 / 0.95), 0 0 34px -12px rgb(94 255 200 / 0.6);
+}
+
+/* ------------------------- Playhead & viewport ---------------------------- */
+
+.dark .xeno-playhead {
+	background: linear-gradient(180deg, var(--xeno-mint), var(--xeno-cyan) 60%, transparent);
+	box-shadow: 0 0 10px rgb(94 255 200 / 0.9), 0 0 24px rgb(56 232 255 / 0.45);
+}
+.dark .xeno-playhead-knob {
+	background: radial-gradient(circle, #fff 0 30%, var(--xeno-mint) 32%);
+	box-shadow: 0 0 0 3px rgb(94 255 200 / 0.25), 0 0 16px rgb(94 255 200 / 0.95);
+}
+/* The program monitor sits in a holographic frame. */
+.dark .xeno-viewport {
+	border-color: rgb(94 255 200 / 0.28);
+	box-shadow:
+		0 0 0 1px rgb(167 139 250 / 0.12),
+		0 0 30px -6px rgb(94 255 200 / 0.35),
+		0 0 90px -30px rgb(124 58 237 / 0.7);
+}
+
+/* -------------------------------- Keyframes ------------------------------- */
+
+@keyframes xeno-drift {
+	0% { transform: translate3d(-4%, -2%, 0) rotate(0deg) scale(1); }
+	50% { transform: translate3d(3%, 2%, 0) rotate(8deg) scale(1.08); }
+	100% { transform: translate3d(-2%, 4%, 0) rotate(-6deg) scale(1.02); }
+}
+@keyframes xeno-sweep {
+	from { background-position: 200% 0; }
+	to { background-position: -200% 0; }
+}
+@keyframes xeno-holo {
+	from { background-position: 0% 0; }
+	to { background-position: 220% 0; }
+}
+@keyframes xeno-spin {
+	to { transform: rotate(360deg); }
+}
+@keyframes xeno-pulse {
+	0%, 100% { opacity: 1; transform: scale(1); }
+	50% { opacity: 0.45; transform: scale(0.8); }
+}
+@keyframes xeno-shimmer {
+	from { background-position: -60% 0; }
+	to { background-position: 160% 0; }
+}
+@keyframes xeno-scan {
+	0% { transform: translateX(-110%); }
+	100% { transform: translateX(310%); }
+}
+@keyframes xeno-rise {
+	from { opacity: 0; transform: translateY(8px) scale(0.99); filter: blur(3px); }
+	to { opacity: 1; transform: none; filter: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.xeno *,
+	.xeno *::before,
+	.xeno *::after,
+	.xeno::before,
+	.xeno::after {
+		animation: none !important;
+		transition: none !important;
+	}
+}
+
+/* Landing page — Xeno language. Everything is scoped under .lp so it cannot leak into the editor. */
+
+.lp { position: relative; overflow-x: clip; color: #e6eeff; font-family: var(--xeno-font-text); }
+.lp a { color: inherit; }
+.lp h1, .lp h2, .lp h3 { font-family: var(--xeno-font-display); letter-spacing: 0.02em; }
+.lp-wrap { width: min(1200px, 100% - 2.5rem); margin-inline: auto; }
+.lp-section { padding-block: clamp(4rem, 9vw, 7.5rem); position: relative; }
+.lp-kicker { font-family: var(--xeno-font-mono); font-size: 0.68rem; letter-spacing: 0.26em; text-transform: uppercase; color: rgb(94 255 200 / 0.85); }
+.lp-h2 { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 700; line-height: 1.05; margin: 0.7rem 0 1rem; text-transform: uppercase; }
+.lp-lead { max-width: 40rem; color: #aab6d8; font-size: 1.02rem; line-height: 1.65; }
+
+/* ---------------------------------- Nav ---------------------------------- */
+.lp-nav { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(16px) saturate(150%); background: linear-gradient(180deg, rgb(4 5 14 / 0.82), rgb(4 5 14 / 0.45)); }
+.lp-nav::after { content: ""; position: absolute; inset: auto 0 0; height: 1px; background: linear-gradient(90deg, transparent, rgb(94 255 200 / 0.5), rgb(167 139 250 / 0.5), transparent); }
+.lp-nav-in { display: flex; align-items: center; justify-content: space-between; gap: 1rem; height: 4.1rem; }
+.lp-brand { display: inline-flex; align-items: center; gap: 0.7rem; font-family: var(--xeno-font-display); font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; font-size: 0.9rem; text-decoration: none; }
+.lp-links { display: none; gap: 1.6rem; font-size: 0.85rem; color: #aab6d8; }
+.lp-links a { text-decoration: none; transition: color 0.2s; }
+.lp-links a:hover { color: var(--xeno-mint); }
+@media (min-width: 860px) { .lp-links { display: flex; } }
+
+/* --------------------------------- Buttons -------------------------------- */
+.lp-btn { display: inline-flex; align-items: center; gap: 0.55rem; padding: 0.85rem 1.5rem; border-radius: 999px; font-family: var(--xeno-font-display); font-weight: 600; font-size: 0.82rem; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; transition: transform 0.25s var(--xeno-ease), box-shadow 0.3s, background-position 0.6s, border-color 0.2s; }
+.lp-btn-primary { color: #031015 !important; background: var(--xeno-holo); background-size: 220% 100%; box-shadow: 0 0 0 1px rgb(94 255 200 / 0.55), 0 10px 40px -10px rgb(94 255 200 / 0.8); }
+.lp-btn-primary:hover { background-position: 100% 0; transform: translateY(-2px); box-shadow: 0 0 0 1px rgb(94 255 200 / 0.9), 0 14px 48px -8px rgb(56 232 255 / 0.9); }
+.lp-btn-ghost { border: 1px solid rgb(167 139 250 / 0.4); background: rgb(255 255 255 / 0.03); backdrop-filter: blur(8px); }
+.lp-btn-ghost:hover { border-color: rgb(94 255 200 / 0.8); box-shadow: 0 0 28px -8px rgb(94 255 200 / 0.8); transform: translateY(-2px); }
+
+/* ---------------------------------- Hero ---------------------------------- */
+.lp-hero { padding-block: clamp(3rem, 7vw, 6rem) clamp(3rem, 6vw, 5rem); position: relative; }
+.lp-hero-grid { display: grid; gap: 3rem; align-items: center; }
+@media (min-width: 1040px) { .lp-hero-grid { grid-template-columns: 0.95fr 1.25fr; gap: 2.5rem; } }
+.lp-h1 { font-size: clamp(2.5rem, 6.4vw, 5rem); line-height: 0.98; font-weight: 800; text-transform: uppercase; margin: 1rem 0 1.4rem; }
+.lp-h1 .holo { background: var(--xeno-holo); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: xeno-holo 8s linear infinite; }
+.lp-cta { display: flex; flex-wrap: wrap; gap: 0.9rem; margin-top: 2rem; }
+.lp-trust { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.8rem; }
+.lp-chip { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.28rem 0.7rem; border-radius: 999px; font-family: var(--xeno-font-mono); font-size: 0.66rem; letter-spacing: 0.06em; border: 1px solid rgb(150 160 255 / 0.22); background: rgb(255 255 255 / 0.03); color: #b9c4e3; }
+.lp-hero-video { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; object-fit: cover; opacity: 0.28; mask-image: linear-gradient(180deg, #000 30%, transparent 95%); }
+.lp-grid-bg { position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: 0.6; background: linear-gradient(rgb(140 150 255 / 0.06) 1px, transparent 1px) 0 0 / 56px 56px, linear-gradient(90deg, rgb(140 150 255 / 0.06) 1px, transparent 1px) 0 0 / 56px 56px; mask-image: radial-gradient(ellipse 70% 60% at 60% 30%, #000, transparent 75%); }
+.lp-portal { position: absolute; right: -14vmax; top: -22vmax; width: 58vmax; height: 58vmax; z-index: -1; pointer-events: none; border-radius: 50%; background: radial-gradient(circle, transparent 52%, rgb(94 255 200 / 0.09) 55%, transparent 58%), radial-gradient(circle, transparent 62%, rgb(167 139 250 / 0.13) 64%, transparent 67%), conic-gradient(from 0deg, transparent, rgb(94 255 200 / 0.2), rgb(56 232 255 / 0.12), rgb(167 139 250 / 0.25), transparent 72%); mask-image: radial-gradient(circle, #000 35%, transparent 70%); animation: xeno-spin 120s linear infinite; }
+
+/* ------------------------- Editor mockup (hero demo) ---------------------- */
+.lp-demo-stage { position: relative; }
+.lp-demo { container-type: inline-size; position: relative; border-radius: 16px; background: linear-gradient(180deg, rgb(15 18 42 / 0.92), rgb(6 8 22 / 0.95)); border: 1px solid rgb(150 160 255 / 0.2); box-shadow: 0 50px 120px -50px rgb(0 0 0 / 0.95), 0 0 80px -30px rgb(94 255 200 / 0.35), inset 0 1px 0 rgb(255 255 255 / 0.06); overflow: hidden; transform: perspective(1400px) rotateY(-5deg) rotateX(2deg); transition: transform 0.6s var(--xeno-ease); }
+.lp-demo:hover { transform: perspective(1400px) rotateY(0) rotateX(0); }
+@media (max-width: 1039px) { .lp-demo { transform: none; } }
+.lp-bar { display: flex; align-items: center; gap: 1.4cqw; padding: 1.6cqw 2.2cqw; border-bottom: 1px solid rgb(150 160 255 / 0.12); font-family: var(--xeno-font-mono); font-size: 1.7cqw; color: #8e9ac0; letter-spacing: 0.08em; }
+.lp-dot { width: 1.5cqw; height: 1.5cqw; border-radius: 50%; background: #ff5c8a; }
+.lp-dot:nth-child(2) { background: #ffc46b; } .lp-dot:nth-child(3) { background: #5effc8; }
+.lp-bar b { margin-left: 1.4cqw; font-weight: 500; color: #cfd8f5; }
+.lp-bar .live { margin-left: auto; color: var(--xeno-mint); display: inline-flex; gap: 0.8cqw; align-items: center; }
+.lp-body { display: grid; grid-template-columns: 4.4cqw 31cqw 1fr; gap: 1.4cqw; padding: 1.6cqw; }
+.lp-rail { display: flex; flex-direction: column; gap: 1.2cqw; padding-top: 0.6cqw; }
+.lp-rail i { display: block; width: 3.2cqw; height: 3.2cqw; border-radius: 0.9cqw; background: rgb(255 255 255 / 0.06); }
+.lp-rail i.on { background: rgb(94 255 200 / 0.18); box-shadow: inset 0 0 0 1px rgb(94 255 200 / 0.6), 0 0 2cqw rgb(94 255 200 / 0.5); }
+.lp-panel { border-radius: 1.4cqw; padding: 1.8cqw; background: rgb(255 255 255 / 0.03); border: 1px solid rgb(150 160 255 / 0.14); min-width: 0; }
+.lp-panel h4 { margin: 0 0 1.2cqw; font-family: var(--xeno-font-display); text-transform: uppercase; letter-spacing: 0.2em; font-size: 1.55cqw; color: var(--xeno-mint); font-weight: 600; }
+.lp-text { font-size: 1.9cqw; line-height: 1.75; color: #cfd8f5; }
+.lp-text span { display: inline-block; margin-right: 0.7cqw; transition: opacity 0.4s, color 0.4s, text-decoration-color 0.4s; text-decoration: line-through transparent 0.2cqw; }
+.lp-text span[data-cut="true"] { color: #ff5c8a; text-decoration-color: #ff5c8a; opacity: 0.55; }
+.lp-pills { display: flex; flex-wrap: wrap; gap: 0.9cqw; margin-top: 1.6cqw; }
+.lp-pill { font-family: var(--xeno-font-mono); font-size: 1.45cqw; padding: 0.5cqw 1.2cqw; border-radius: 999px; border: 1px solid rgb(150 160 255 / 0.25); color: #aab6d8; transition: all 0.4s; }
+.lp-pill[data-on="true"] { color: #04110d; background: var(--xeno-mint); border-color: var(--xeno-mint); box-shadow: 0 0 2cqw rgb(94 255 200 / 0.6); }
+.lp-preview { position: relative; aspect-ratio: 16 / 9; border-radius: 1.4cqw; overflow: hidden; background: radial-gradient(60% 80% at 25% 30%, #3a1d8f, transparent 70%), radial-gradient(50% 70% at 80% 70%, #0b7a86, transparent 70%), linear-gradient(135deg, #0a0d2a, #14082e); border: 1px solid rgb(94 255 200 / 0.28); box-shadow: 0 0 5cqw -1cqw rgb(94 255 200 / 0.3); }
+.lp-preview svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.lp-caption { position: absolute; left: 50%; bottom: 7%; transform: translateX(-50%); padding: 0.6cqw 2cqw; border-radius: 1.2cqw; background: #111827; color: #fff; font: 800 2.8cqw var(--xeno-font-text); white-space: nowrap; box-shadow: 0 1cqw 3cqw rgb(0 0 0 / 0.5); }
+.lp-stat { position: absolute; top: 4%; left: 3%; font-family: var(--xeno-font-mono); font-size: 1.6cqw; padding: 0.6cqw 1.4cqw; border-radius: 999px; background: rgb(3 4 12 / 0.7); border: 1px solid rgb(94 255 200 / 0.5); color: var(--xeno-mint); backdrop-filter: blur(6px); }
+.lp-timeline { margin: 0 1.6cqw 1.6cqw; padding: 1.6cqw; border-radius: 1.4cqw; background: rgb(0 0 0 / 0.25); border: 1px solid rgb(150 160 255 / 0.12); position: relative; overflow: hidden; }
+.lp-ruler { display: flex; justify-content: space-between; font-family: var(--xeno-font-mono); font-size: 1.3cqw; color: #6f7ba6; margin-bottom: 1.2cqw; }
+.lp-track { display: flex; gap: var(--g, 1.8cqw); height: 3.6cqw; margin-bottom: 1cqw; transition: gap 0.9s var(--xeno-ease); }
+.lp-clip { flex: var(--w) 0 0; min-width: 0; border-radius: 0.8cqw; background: linear-gradient(180deg, rgb(94 255 200 / 0.75), rgb(36 170 140 / 0.75)); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.25); }
+.lp-track.cap .lp-clip { background: linear-gradient(180deg, rgb(167 139 250 / 0.85), rgb(110 70 220 / 0.8)); height: 2.4cqw; align-self: center; }
+.lp-wave { display: flex; align-items: center; gap: 0.35cqw; height: 3.4cqw; }
+.lp-wave i { flex: 1; min-width: 0; border-radius: 1cqw; background: rgb(56 232 255 / 0.65); height: var(--h); }
+.lp-playhead { position: absolute; top: 0; bottom: 0; width: 0.3cqw; left: 1.6cqw; background: linear-gradient(180deg, var(--xeno-mint), var(--xeno-cyan) 60%, transparent); box-shadow: 0 0 1.6cqw var(--xeno-mint); animation: lp-play 9s linear infinite; }
+@keyframes lp-play { from { left: 1.6cqw; } to { left: calc(100% - 1.9cqw); } }
+.lp-chapters { margin-top: 1.4cqw; font-family: var(--xeno-font-mono); font-size: 1.5cqw; color: #aab6d8; line-height: 1.8; opacity: 0; transform: translateY(1cqw); transition: all 0.6s var(--xeno-ease); }
+.lp-chapters[data-on="true"] { opacity: 1; transform: none; }
+.lp-chapters b { color: var(--xeno-mint); font-weight: 500; margin-right: 1cqw; }
+.lp-note { margin-top: 0.8rem; text-align: center; font-family: var(--xeno-font-mono); font-size: 0.62rem; letter-spacing: 0.14em; color: #66729a; text-transform: uppercase; }
+
+/* Floating stickers around the mockup */
+.lp-float { position: absolute; z-index: 5; pointer-events: none; filter: drop-shadow(0 18px 24px rgb(0 0 0 / 0.5)); animation: lp-bob 6.5s ease-in-out infinite; animation-delay: var(--d, 0s); width: var(--s, 150px); }
+@keyframes lp-bob { 0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); } 50% { transform: translateY(-14px) rotate(calc(var(--r, 0deg) + 2deg)); } }
+@media (max-width: 760px) { .lp-float { display: none; } }
+
+/* -------------------------------- Marquee -------------------------------- */
+.lp-marquee { overflow: hidden; border-block: 1px solid rgb(150 160 255 / 0.12); background: rgb(255 255 255 / 0.015); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.lp-marquee-track { display: flex; width: max-content; gap: 2.6rem; padding-block: 1.05rem; animation: lp-marquee 48s linear infinite; font-family: var(--xeno-font-display); text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.82rem; color: #8e9ac0; }
+.lp-marquee-track span::before { content: "◆"; margin-right: 2.6rem; color: var(--xeno-mint); }
+@keyframes lp-marquee { to { transform: translateX(-50%); } }
+
+/* --------------------------------- Bento ---------------------------------- */
+.lp-bento { display: grid; gap: 1.1rem; margin-top: 3rem; grid-template-columns: repeat(12, 1fr); }
+.lp-cell { grid-column: span 12; padding: 1.6rem; min-height: 15rem; display: flex; flex-direction: column; gap: 0.7rem; overflow: hidden; }
+.lp-cell h3 { font-size: 1.05rem; text-transform: uppercase; letter-spacing: 0.12em; margin: 0; }
+.lp-cell p { color: #aab6d8; font-size: 0.92rem; line-height: 1.6; margin: 0; }
+.lp-cell .art { margin-top: auto; padding-top: 1rem; }
+@media (min-width: 760px) { .lp-cell.w6 { grid-column: span 6; } .lp-cell.w4 { grid-column: span 6; } }
+@media (min-width: 1040px) { .lp-cell.w7 { grid-column: span 7; } .lp-cell.w5 { grid-column: span 5; } .lp-cell.w4 { grid-column: span 4; } .lp-cell.w8 { grid-column: span 8; } }
+.lp-mini { font-family: var(--xeno-font-mono); font-size: 0.74rem; line-height: 1.9; color: #cfd8f5; }
+.lp-mini .cut { color: #ff5c8a; text-decoration: line-through; opacity: 0.6; }
+.lp-mini .ok { color: var(--xeno-mint); }
+.lp-bars { display: flex; align-items: center; gap: 3px; height: 3.2rem; }
+.lp-bars i { flex: 1; border-radius: 3px; background: linear-gradient(180deg, var(--xeno-cyan), var(--xeno-violet)); height: var(--h); animation: lp-eq 2.4s ease-in-out infinite; animation-delay: var(--d); transform-origin: center; }
+@keyframes lp-eq { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.45); } }
+.lp-frames { display: flex; align-items: flex-end; gap: 0.8rem; }
+.lp-frames div { border: 1.5px solid rgb(94 255 200 / 0.7); border-radius: 6px; background: linear-gradient(135deg, rgb(94 255 200 / 0.1), rgb(167 139 250 / 0.14)); display: grid; place-items: center; font-family: var(--xeno-font-mono); font-size: 0.6rem; color: #b9c4e3; }
+.lp-sticker-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; }
+.lp-sticker-row img { height: 3.4rem; width: auto; filter: drop-shadow(0 8px 10px rgb(0 0 0 / 0.5)); transition: transform 0.3s var(--xeno-ease); }
+.lp-sticker-row img:hover { transform: scale(1.12) rotate(-3deg); }
+.lp-lut { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; }
+.lp-lut i { aspect-ratio: 16 / 10; border-radius: 6px; background: var(--g); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.12); }
+
+/* ------------------------------- Creators band ----------------------------- */
+.lp-creators { display: grid; gap: 2.2rem; align-items: center; }
+@media (min-width: 960px) { .lp-creators { grid-template-columns: 1fr 1fr; gap: 4rem; } }
+.lp-list { list-style: none; padding: 0; margin: 1.8rem 0 0; display: grid; gap: 0.85rem; }
+.lp-list li { display: flex; gap: 0.9rem; align-items: flex-start; color: #cfd8f5; font-size: 0.95rem; line-height: 1.5; }
+.lp-list li::before { content: "◆"; color: var(--xeno-mint); flex: none; margin-top: 0.05rem; }
+.lp-list small { display: block; color: #8e9ac0; font-size: 0.82rem; }
+
+/* --------------------------------- Steps ---------------------------------- */
+.lp-steps { display: grid; gap: 1rem; margin-top: 3rem; counter-reset: step; }
+@media (min-width: 900px) { .lp-steps { grid-template-columns: repeat(4, 1fr); } }
+.lp-step { position: relative; padding: 1.5rem; counter-increment: step; }
+.lp-step::before { content: "0" counter(step); display: inline-grid; place-items: center; width: 2.4rem; height: 2.4rem; border-radius: 10px; font-family: var(--xeno-font-mono); font-size: 0.8rem; color: #04110d; background: var(--xeno-holo); background-size: 220% 100%; margin-bottom: 1rem; box-shadow: 0 0 22px -4px rgb(94 255 200 / 0.8); }
+.lp-step h3 { margin: 0 0 0.5rem; font-size: 0.98rem; text-transform: uppercase; letter-spacing: 0.12em; }
+.lp-step p { margin: 0; color: #aab6d8; font-size: 0.9rem; line-height: 1.6; }
+
+/* ------------------------------- Privacy panel ----------------------------- */
+.lp-local { display: grid; gap: 2rem; align-items: center; }
+@media (min-width: 960px) { .lp-local { grid-template-columns: 1.1fr 0.9fr; } }
+.lp-net { position: relative; aspect-ratio: 1.3; max-width: 28rem; margin-inline: auto; width: 100%; }
+.lp-net svg { width: 100%; height: 100%; overflow: visible; }
+.lp-net .ring { fill: none; stroke: rgb(94 255 200 / 0.35); stroke-dasharray: 3 7; transform-origin: 50% 50%; animation: xeno-spin 40s linear infinite; }
+.lp-net .pulse { fill: none; stroke: var(--xeno-mint); animation: lp-pulse 3.6s ease-out infinite; transform-origin: 50% 50%; }
+@keyframes lp-pulse { from { transform: scale(0.35); opacity: 0.9; } to { transform: scale(1.5); opacity: 0; } }
+.lp-cloud-x { stroke: #ff5c8a; opacity: 0.8; }
+
+/* ----------------------------------- FAQ ----------------------------------- */
+.lp-faq { display: grid; gap: 0.8rem; margin-top: 2.5rem; max-width: 52rem; }
+.lp-faq details { padding: 1.1rem 1.4rem; border-radius: 14px; border: 1px solid rgb(150 160 255 / 0.16); background: rgb(255 255 255 / 0.025); transition: border-color 0.25s, background 0.25s; }
+.lp-faq details[open] { border-color: rgb(94 255 200 / 0.5); background: rgb(94 255 200 / 0.04); }
+.lp-faq summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 1rem; font-weight: 600; }
+.lp-faq summary::-webkit-details-marker { display: none; }
+.lp-faq summary::after { content: "+"; font-family: var(--xeno-font-mono); color: var(--xeno-mint); transition: transform 0.3s; }
+.lp-faq details[open] summary::after { transform: rotate(45deg); }
+.lp-faq p { margin: 0.8rem 0 0; color: #aab6d8; font-size: 0.92rem; line-height: 1.65; }
+
+/* ----------------------------------- CTA ----------------------------------- */
+.lp-final { text-align: center; padding-block: clamp(5rem, 10vw, 8rem); position: relative; }
+.lp-final .lp-h2 { font-size: clamp(2rem, 5.2vw, 4rem); }
+.lp-foot { border-top: 1px solid rgb(150 160 255 / 0.14); padding-block: 2rem; font-size: 0.78rem; color: #66729a; display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; }
+.lp-foot a { text-decoration: underline; text-underline-offset: 3px; }
+
+/* ------------------------------ Scroll reveal ------------------------------ */
+@supports (animation-timeline: view()) {
+ .lp-reveal { animation: lp-reveal linear both; animation-timeline: view(); animation-range: entry 0% cover 28%; }
+ @keyframes lp-reveal { from { opacity: 0; transform: translateY(36px) scale(0.985); filter: blur(4px); } to { opacity: 1; transform: none; filter: none; } }
+}
+
+@media (prefers-reduced-motion: reduce) {
+ .lp *, .lp *::before, .lp *::after { animation: none !important; transition: none !important; }
+ .lp-demo { transform: none; }
+}
+
+/* Grid children may shrink below their content, so long rows wrap instead of widening the page. */
+.lp-hero-grid, .lp-creators, .lp-local { grid-template-columns: minmax(0, 1fr); }
+.lp-hero-grid > *, .lp-creators > *, .lp-local > * { min-width: 0; }
+.lp-frames { flex-wrap: wrap; }
+@media (min-width: 960px) { .lp-creators, .lp-local { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .lp-local { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); } }
+@media (min-width: 1040px) { .lp-hero-grid { grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.25fr); } }
