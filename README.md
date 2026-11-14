@@ -25,6 +25,15 @@ npx serve .
 
 Abre `http://127.0.0.1:4173/`.
 
+## Publicar una versión nueva del editor
+
+1. Crea la release con los tres ZIP de descarga: `elite-editor-windows-standalone.zip`,
+   `elite-editor-macos-standalone.zip` y `elite-editor-linux-standalone.zip`.
+2. Déjala como **latest**. Si la marcas como *pre-release*, GitHub la excluye de
+   `/releases/latest` y los botones seguirían descargando la anterior.
+3. No hay que tocar el HTML: los botones apuntan a `releases/latest/download/...` y el
+   peso de cada paquete se lee de la API de GitHub al cargar la página.
+
 ## Publicación
 
 GitHub Pages sirve la rama `main` desde la raíz. El archivo `.nojekyll` evita
