@@ -38,6 +38,32 @@ document.querySelectorAll(".tilt").forEach((card) => {
 	});
 });
 
+/** Tamaño real de cada paquete, leído de la última release publicada. */
+const sizeLabels = document.querySelectorAll("[data-download-size]");
+
+if (sizeLabels.length > 0) {
+	fetch("https://api.github.com/repos/nachoweb3/elite-editor-landing/releases/latest", {
+		headers: { Accept: "application/vnd.github+json" },
+	})
+		.then((response) => (response.ok ? response.json() : Promise.reject(new Error(String(response.status)))))
+		.then((release) => {
+			const assets = Array.isArray(release.assets) ? release.assets : [];
+
+			sizeLabels.forEach((label) => {
+				const os = label.dataset.downloadSize;
+				const asset = assets.find((item) => item.name.includes(`-${os}-`));
+
+				if (!asset || typeof asset.size !== "number") return;
+
+				const megabytes = (asset.size / 1000000).toFixed(1).replace(".", ",");
+				label.textContent = `${megabytes} MB`;
+			});
+		})
+		.catch(() => {
+			// Sin red o con el límite de la API se mantiene el texto de reserva.
+		});
+}
+
 /** Copy the local command. */
 document.querySelectorAll("[data-copy]").forEach((button) => {
 	button.addEventListener("click", async () => {
