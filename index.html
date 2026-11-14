@@ -54,8 +54,8 @@
 			rel="stylesheet"
 			href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap"
 		/>
-		<link rel="stylesheet" href="assets/styles.css?v=2026-11-14l" />
-		<script src="assets/app.js?v=2026-11-14l" defer></script>
+		<link rel="stylesheet" href="assets/styles.css?v=2026-11-14m" />
+		<script src="assets/app.js?v=2026-11-14m" defer></script>
 	</head>
 	<body>
 		<div class="ambient" aria-hidden="true">
@@ -381,52 +381,56 @@
 			<section class="section" id="descargar">
 				<div class="section__head reveal">
 					<h2>Descárgalo y<span>pruébalo hoy.</span></h2>
-					<p>Un paquete por sistema y el mismo editor dentro. Beta gratis, sin cuenta ni tarjeta.</p>
+					<p>
+						Ya compilado: se descomprime y arranca con Node, sin instalar dependencias. Beta
+						gratis, sin cuenta ni tarjeta.
+					</p>
 				</div>
 				<div class="downloads">
 					<a
 						class="download reveal"
-						href="https://github.com/nachoweb3/elite-editor-landing/releases/download/v0.1.0-beta/elite-editor-windows.zip"
+						href="https://github.com/nachoweb3/elite-editor-landing/releases/download/v0.2.0-beta/elite-editor-windows-standalone.zip"
 						rel="noopener"
 					>
 						<span>
 							<span class="download__os">Windows</span>
-							<span class="download__meta">ZIP · 5,7 MB · start.bat</span>
+							<span class="download__meta">ZIP · 28 MB · start.bat · solo Node 22</span>
 						</span>
 						<span class="download__go" aria-hidden="true">↓</span>
 					</a>
 					<a
 						class="download reveal"
-						href="https://github.com/nachoweb3/elite-editor-landing/releases/download/v0.1.0-beta/elite-editor-macos.zip"
+						href="https://github.com/nachoweb3/elite-editor-landing/releases/download/v0.2.0-beta/elite-editor-macos-standalone.zip"
 						rel="noopener"
 					>
 						<span>
 							<span class="download__os">macOS</span>
-							<span class="download__meta">ZIP · 5,7 MB · start.sh</span>
+							<span class="download__meta">ZIP · 28 MB · start.sh · solo Node 22</span>
 						</span>
 						<span class="download__go" aria-hidden="true">↓</span>
 					</a>
 					<a
 						class="download reveal"
-						href="https://github.com/nachoweb3/elite-editor-landing/releases/download/v0.1.0-beta/elite-editor-linux.zip"
+						href="https://github.com/nachoweb3/elite-editor-landing/releases/download/v0.2.0-beta/elite-editor-linux-standalone.zip"
 						rel="noopener"
 					>
 						<span>
 							<span class="download__os">Linux</span>
-							<span class="download__meta">ZIP · 5,7 MB · start.sh</span>
+							<span class="download__meta">ZIP · 28 MB · start.sh · solo Node 22</span>
 						</span>
 						<span class="download__go" aria-hidden="true">↓</span>
 					</a>
 				</div>
 				<div class="dlnotes reveal">
 					<p>
-						<strong>Antes de descargar:</strong> necesitas Bun 1.2 o Node 22, Chrome o Edge
-						actualizados y unos 2 GB libres. Descomprime el ZIP y ejecuta el lanzador de tu
-						sistema; la primera vez instala dependencias y después arranca en segundos.
+						<strong>Antes de descargar:</strong> solo necesitas Node 22 o superior
+						(<a href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org</a>) y Chrome
+						o Edge actualizados. Descomprime el ZIP, ejecuta el lanzador de tu sistema y abre
+						<code>localhost:3000</code>. No hay que instalar nada más ni compilar.
 					</p>
 					<p>
-						<a href="#acceso">Ver los pasos manuales</a> ·
-						<a href="https://github.com/nachoweb3/elite-editor-landing/releases/tag/v0.1.0-beta" target="_blank" rel="noopener">Notas de la versión&nbsp;↗</a>
+						<a href="#acceso">Ver el arranque manual</a> ·
+						<a href="https://github.com/nachoweb3/elite-editor-landing/releases/tag/v0.2.0-beta" target="_blank" rel="noopener">Notas de la versión&nbsp;↗</a>
 					</p>
 				</div>
 			</section>
@@ -444,11 +448,11 @@
 						<p class="access__num">01 · versión local</p>
 						<h3>Arrancarlo en tu equipo</h3>
 						<p>
-							Descarga el paquete de arriba y ejecuta su lanzador, o hazlo a mano: instala
-							dependencias y levanta el servidor con este comando.
+							Descarga el paquete de arriba y ejecuta su lanzador, o abre una terminal dentro
+							de la carpeta descomprimida y arranca el servidor ya compilado.
 						</p>
-						<button class="copy" type="button" data-copy="bun run dev">
-							<code>$ bun run dev</code><span>copiar</span>
+						<button class="copy" type="button" data-copy="node server.js">
+							<code>$ node server.js</code><span>copiar</span>
 						</button>
 					</article>
 					<article class="access__card reveal">
