@@ -841,6 +841,7 @@ img {
 }
 
 .dlnotes {
+	max-width: 78ch;
 	margin-top: 14px;
 	padding: 18px 20px;
 	border: 1px dashed var(--line-strong);
