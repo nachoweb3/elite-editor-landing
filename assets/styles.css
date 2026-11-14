@@ -1280,6 +1280,38 @@ img {
 	.author {
 		padding: 24px 20px;
 	}
+
+	/* Detalle en pantallas pequeñas: más cuerpo de texto y menos relleno. */
+	.spec {
+		padding: 22px 18px;
+	}
+
+	.spec h3 {
+		font-size: 16px;
+	}
+
+	.spec li {
+		padding: 0 0 12px 18px;
+		font-size: 14px;
+		line-height: 1.6;
+	}
+
+	.spec li::before {
+		top: 8px;
+	}
+
+	.notes > div {
+		padding: 18px;
+	}
+
+	.notes__k {
+		font-size: 9.5px;
+	}
+
+	.notes p:last-child {
+		font-size: 14px;
+		line-height: 1.6;
+	}
 }
 
 @media (prefers-reduced-motion: reduce) {
