@@ -1227,6 +1227,11 @@ img {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
 
+	.spec li,
+	.notes p:last-child {
+		font-size: 13.5px;
+	}
+
 	.chip {
 		display: block;
 	}
