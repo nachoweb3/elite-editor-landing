@@ -8,17 +8,13 @@ const stage = document.getElementById("stage");
 const stageInner = document.getElementById("stageInner");
 
 if (stage && stageInner && !reduceMotion) {
-	let frame = 0;
-
+	// Se aplica en el propio evento: con requestAnimationFrame el efecto se
+	// quedaba sin estrenar cuando el navegador frenaba los frames.
 	stage.addEventListener("pointermove", (event) => {
-		if (frame) return;
-		frame = requestAnimationFrame(() => {
-			frame = 0;
-			const rect = stage.getBoundingClientRect();
-			const x = (event.clientX - rect.left) / rect.width - 0.5;
-			const y = (event.clientY - rect.top) / rect.height - 0.5;
-			stageInner.style.transform = `rotateX(${(-y * 9).toFixed(2)}deg) rotateY(${(x * 14).toFixed(2)}deg)`;
-		});
+		const rect = stage.getBoundingClientRect();
+		const x = (event.clientX - rect.left) / rect.width - 0.5;
+		const y = (event.clientY - rect.top) / rect.height - 0.5;
+		stageInner.style.transform = `rotateX(${(-y * 9).toFixed(2)}deg) rotateY(${(x * 14).toFixed(2)}deg)`;
 	});
 
 	stage.addEventListener("pointerleave", () => {
