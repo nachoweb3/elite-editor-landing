@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="es">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Elite Editor · Beta abierta, gratis para todos</title>
+		<meta
+			name="description"
+			content="Editor de vídeo con timeline multipista, asistente IA y biblioteca de recursos. Beta abierta y gratuita, construida en codigoelite.eu por nacho_web3."
+		/>
+		<meta name="theme-color" content="#04050a" />
+		<link rel="canonical" href="https://nachoweb3.github.io/elite-editor-landing/" />
+
+		<meta property="og:type" content="website" />
+		<meta property="og:locale" content="es_ES" />
+		<meta property="og:site_name" content="Elite Editor" />
+		<meta property="og:title" content="Elite Editor · Beta abierta, gratis para todos" />
+		<meta
+			property="og:description"
+			content="Timeline, IA y 191 recursos en el navegador. Gratis mientras dure la beta. Construida en codigoelite.eu por nacho_web3."
+		/>
+		<meta property="og:image" content="assets/og.jpg" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content="Elite Editor · Beta abierta, gratis" />
+		<meta name="twitter:description" content="Edita vídeo en el navegador. Beta gratis, sin cuenta." />
+		<meta name="twitter:image" content="assets/og.jpg" />
+
+		<link rel="icon" href="assets/elite-mark.svg" type="image/svg+xml" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap"
+		/>
+		<link rel="stylesheet" href="assets/styles.css" />
+		<script src="assets/app.js" defer></script>
+	</head>
+	<body>
+		<div class="ambient" aria-hidden="true">
+			<div class="ambient__glow"></div>
+			<div class="ambient__grid"></div>
+			<div class="ambient__grain"></div>
+		</div>
+
+		<header class="nav">
+			<a class="brand" href="#top" aria-label="Elite Editor, inicio">
+				<span class="brand__mark">
+					<img src="assets/elite-mark.svg" alt="" width="20" height="20" />
+					<span class="brand__ping" aria-hidden="true"></span>
+				</span>
+				<span class="brand__name">Elite Editor</span>
+			</a>
+			<nav class="nav__links" aria-label="Secciones">
+				<a href="#sistema">Sistema</a>
+				<a href="#beta">Beta</a>
+				<a href="#acceso">Acceso</a>
+				<a href="#creditos">Autoría</a>
+			</nav>
+			<div class="nav__actions">
+				<span class="pill"><span class="pill__dot" aria-hidden="true"></span>BETA · 0 €</span>
+				<a class="btn btn--primary" href="#acceso">Entrar <span aria-hidden="true">→</span></a>
+			</div>
+		</header>
+
+		<main id="top">
+			<section class="hero">
+				<div class="hero__copy">
+					<p class="kicker reveal">
+						<span class="kicker__rule" aria-hidden="true"></span>
+						construida en www.codigoelite.eu por nacho_web3
+					</p>
+					<h1 class="hero__title reveal">
+						Edita vídeo
+						<span class="hero__shimmer">como en 2035</span>
+						<em>y sin pagar nada.</em>
+					</h1>
+					<p class="hero__lead reveal">
+						Elite Editor monta, subtitula y exporta en tu navegador: timeline multipista,
+						asistente IA y biblioteca incluida. Beta abierta, gratis para todos, sin
+						cuenta ni tarjeta.
+					</p>
+					<div class="hero__cta reveal">
+						<a class="btn btn--primary" href="#acceso">Entrar a la beta <span aria-hidden="true">→</span></a>
+						<a class="btn btn--ghost" href="#beta">Ver el estado</a>
+					</div>
+					<p class="hero__fine reveal">SIN REGISTRO · SIN MARCA DE AGUA · BETA GRATUITA</p>
+					<dl class="stats reveal">
+						<div><dt>191</dt><dd>recursos</dd></div>
+						<div><dt>4</dt><dd>atmósferas</dd></div>
+						<div><dt>0 €</dt><dd>para siempre</dd></div>
+						<div><dt>0</dt><dd>cuentas</dd></div>
+					</dl>
+				</div>
+
+				<div class="stage" id="stage" aria-label="Vista previa del editor">
+					<div class="stage__orbit" aria-hidden="true"></div>
+					<div class="stage__hologram" aria-hidden="true"></div>
+					<div class="stage__inner" id="stageInner">
+						<div class="chip chip--render" data-depth="70">
+							<span>Render</span>
+							<strong>H.264 · 1080×1920 · listo</strong>
+						</div>
+						<div class="chip chip--export" data-depth="90">
+							<span>Exportación</span>
+							<strong>0 € · sin marca de agua</strong>
+						</div>
+
+						<div class="mock">
+							<div class="mock__bar">
+								<span class="mock__dot" aria-hidden="true"></span>
+								<span class="mock__title">Proyecto · sin título</span>
+								<span class="mock__badge">Matrix Elite</span>
+							</div>
+							<div class="mock__preview">
+								<div class="mock__meta"><span>00:00:04:07</span><span>1080 × 1920</span></div>
+								<div class="mock__screen">
+									<span class="mock__scan" aria-hidden="true"></span>
+									<span class="mock__caption">Tu historia empieza aquí</span>
+								</div>
+							</div>
+							<div class="mock__tracks">
+								<div class="track">
+									<span class="track__label">TEXT</span>
+									<span class="track__lane"><i class="clip clip--lime" style="left: 6%; width: 42%"></i></span>
+								</div>
+								<div class="track">
+									<span class="track__label">MAIN</span>
+									<span class="track__lane"><i class="clip clip--sky" style="left: 18%; width: 58%"></i></span>
+								</div>
+								<div class="track">
+									<span class="track__label">AUDIO</span>
+									<span class="track__lane"><i class="clip clip--pink" style="left: 30%; width: 34%"></i></span>
+								</div>
+								<div class="track track--ruler">
+									<span class="track__label"></span>
+									<span class="track__playhead" aria-hidden="true"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<div class="ticker" aria-hidden="true">
+				<div class="ticker__track">
+					<span>Timeline multipista</span><i></i>
+					<span>IA local</span><i></i>
+					<span>Chroma key</span><i></i>
+					<span>Subtítulos por palabra</span><i></i>
+					<span>4 atmósferas</span><i></i>
+					<span>Biblioteca CC0</span><i></i>
+					<span>Keyframes</span><i></i>
+					<span>Render 1080×1920</span><i></i>
+					<span>Timeline multipista</span><i></i>
+					<span>IA local</span><i></i>
+					<span>Chroma key</span><i></i>
+					<span>Subtítulos por palabra</span><i></i>
+					<span>4 atmósferas</span><i></i>
+					<span>Biblioteca CC0</span><i></i>
+					<span>Keyframes</span><i></i>
+					<span>Render 1080×1920</span><i></i>
+				</div>
+			</div>
+
+			<section class="section" id="sistema">
+				<div class="section__head reveal">
+					<h2>Todo el editor.<span>Nada retenido.</span></h2>
+					<p>En beta no hay plan de pago ni funciones bloqueadas: si algo está, está para todo el mundo.</p>
+				</div>
+				<div class="cards">
+					<article class="card reveal tilt">
+						<div class="card__glow" style="--glow: rgba(56, 189, 248, 0.35)"></div>
+						<p class="card__tag">Timeline</p>
+						<h3>Multipista real</h3>
+						<p>Clips, audio, texto, efectos y keyframes con imanes, marcadores y deshacer ilimitado.</p>
+						<span class="card__foot">incluido en beta</span>
+					</article>
+					<article class="card reveal tilt">
+						<div class="card__glow" style="--glow: rgba(167, 139, 250, 0.35)"></div>
+						<p class="card__tag">Asistente</p>
+						<h3>IA que no decide por ti</h3>
+						<p>Detecta silencios, propone cortes y transcribe por palabra. Tú aplicas lo que quieres.</p>
+						<span class="card__foot">incluido en beta</span>
+					</article>
+					<article class="card reveal tilt">
+						<div class="card__glow" style="--glow: rgba(52, 211, 153, 0.32)"></div>
+						<p class="card__tag">Recursos</p>
+						<h3>Biblioteca CC0</h3>
+						<p>191 recursos indexados: sonidos, música, transiciones y pantallas verdes.</p>
+						<span class="card__foot">incluido en beta</span>
+					</article>
+					<article class="card reveal tilt">
+						<div class="card__glow" style="--glow: rgba(244, 114, 182, 0.32)"></div>
+						<p class="card__tag">Acabado</p>
+						<h3>Subtítulos y color</h3>
+						<p>Estilos de subtítulo, LUTs, ruedas de color y chroma key automático al insertar.</p>
+						<span class="card__foot">incluido en beta</span>
+					</article>
+					<article class="card reveal tilt">
+						<div class="card__glow" style="--glow: rgba(251, 191, 36, 0.3)"></div>
+						<p class="card__tag">Salida</p>
+						<h3>Render sin sorpresas</h3>
+						<p>La previa y el archivo final comparten ajustes. H.264/AAC, vertical u horizontal.</p>
+						<span class="card__foot">incluido en beta</span>
+					</article>
+					<article class="card reveal tilt">
+						<div class="card__glow" style="--glow: rgba(34, 211, 238, 0.32)"></div>
+						<p class="card__tag">Interfaz</p>
+						<h3>Cuatro atmósferas</h3>
+						<p>Matrix Elite, Aurora, Ember y Marea: cristal sobre el fondo, contraste ajustado a mano.</p>
+						<span class="card__foot">incluido en beta</span>
+					</article>
+				</div>
+			</section>
+
+			<section class="section" id="beta">
+				<div class="beta reveal">
+					<div class="beta__glow" aria-hidden="true"></div>
+					<p class="kicker kicker--lime">Beta testing abierto</p>
+					<div class="beta__head">
+						<h2>Gratis para todos,<span>mientras dure la beta.</span></h2>
+						<a class="btn btn--primary" href="#acceso">Probar ahora <span aria-hidden="true">→</span></a>
+					</div>
+					<p class="beta__lead">
+						No pedimos correo ni tarjeta. Pedimos uso real: monta un vídeo, expórtalo y dinos
+						qué se rompe. Lo que reportéis entra en la siguiente vuelta.
+					</p>
+					<div class="beta__state">
+						<div>
+							<p class="state state--ok">Funciona hoy</p>
+							<ul>
+								<li>Timeline multipista</li>
+								<li>Biblioteca local</li>
+								<li>Subtítulos y estilos</li>
+								<li>Exportación H.264</li>
+							</ul>
+						</div>
+						<div>
+							<p class="state state--mid">A medias</p>
+							<ul>
+								<li>Reencuadre continuo</li>
+								<li>Sincronía de fuentes</li>
+								<li>Colecciones de biblioteca</li>
+							</ul>
+						</div>
+						<div>
+							<p class="state state--no">Todavía no</p>
+							<ul>
+								<li>Cuentas y nube</li>
+								<li>Colaboración</li>
+								<li>Versión móvil</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="section" id="acceso">
+				<div class="section__head reveal">
+					<h2>Entrar es literalmente eso</h2>
+					<p>
+						Esta beta corre en tu equipo: el editor usa WASM y tus archivos no salen de tu
+						disco. Tienes dos caminos.
+					</p>
+				</div>
+				<div class="access">
+					<article class="access__card reveal">
+						<p class="access__num">01 · versión local</p>
+						<h3>Arrancarlo en tu equipo</h3>
+						<p>
+							Clona el proyecto, instala dependencias y levanta el servidor. Guía completa en
+							<code>docs/GETTING_STARTED.es.md</code>.
+						</p>
+						<button class="copy" type="button" data-copy="bun run dev">
+							<code>$ bun run dev</code><span>copiar</span>
+						</button>
+					</article>
+					<article class="access__card reveal">
+						<p class="access__num">02 · contacto</p>
+						<h3>Pedir acceso guiado</h3>
+						<p>
+							Si prefieres que te acompañemos en la instalación, escríbenos desde
+							codigoelite.eu y te pasamos el paquete y los pasos exactos.
+						</p>
+						<a class="btn btn--ghost" href="https://www.codigoelite.eu" target="_blank" rel="noopener">
+							Escribir a codigoelite.eu <span aria-hidden="true">↗</span>
+						</a>
+					</article>
+				</div>
+			</section>
+
+			<section class="section" id="creditos">
+				<div class="author reveal">
+					<div class="author__main">
+						<img src="assets/elite-mark.svg" width="44" height="44" alt="" />
+						<div>
+							<p class="author__line">
+								Construida en
+								<a href="https://www.codigoelite.eu" target="_blank" rel="noopener">www.codigoelite.eu</a>
+							</p>
+							<p class="author__by">
+								por <strong>nacho_web3</strong> · sobre OpenCut y Open Generative AI
+							</p>
+						</div>
+					</div>
+					<a class="btn btn--ghost" href="https://www.codigoelite.eu" target="_blank" rel="noopener">
+						Visitar codigoelite.eu <span aria-hidden="true">↗</span>
+					</a>
+				</div>
+			</section>
+		</main>
+
+		<footer class="footer">
+			<span>Elite Editor · Beta abierta y gratuita</span>
+			<span>
+				Construida en
+				<a href="https://www.codigoelite.eu" target="_blank" rel="noopener">www.codigoelite.eu</a>
+				por nacho_web3
+			</span>
+		</footer>
+	</body>
+</html>
