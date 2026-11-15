@@ -1,25 +1,26 @@
-# Elite Editor · landing pública
+# Elite Editor · web pública
 
-La presentación publicada en GitHub Pages se genera desde la página actual del editor.
+Landing: https://nachoweb3.github.io/elite-editor-landing/
+Editor: https://nachoweb3.github.io/elite-editor-landing/editor/#/projects
+Código: https://github.com/nachoweb3/elite-editor
 
-- Sitio: https://nachoweb3.github.io/elite-editor-landing/
-- Código actual: https://github.com/nachoweb3/elite-editor
-- Generador: `scripts/export-landing.mjs` en el repositorio del editor.
+El editor se ejecuta en el navegador y guarda proyectos en IndexedDB/OPFS.
+Los botones de la landing abren el editor web directamente, sin depender de localhost.
+La automatización FFmpeg y los servicios con claves privadas requieren la versión local.
 
-Desde el checkout del editor, ejecutar:
+Para actualizar, desde el repositorio del editor:
 
 ```powershell
 node scripts/export-landing.mjs ../Elite-Editor-landing
+node scripts/build-browser-editor.mjs ../Elite-Editor-landing/editor
 ```
 
-Después revisar y subir `index.html` y `assets/landing-current.css` en este repositorio.
-Pages publica `main` desde la raíz. La etiqueta HTML `elite-editor-revision` identifica
-la revisión fuente publicada. El acceso al editor abre `http://127.0.0.1:5181/projects`
-cuando el programa está arrancado en el equipo del visitante. GitHub Pages no aloja el
-backend de edición ni los modelos de IA.
+El build necesita las dependencias del editor, contenido generado y FFmpeg/ffprobe
+para indexar los packs de sonido públicos. Solo copia los packs CC0 incluidos en
+el código; no publica bibliotecas privadas, claves ni proyectos del autor.
 
-Los paquetes de la release v0.2.0-beta son anteriores a esta actualización del código;
-no se actualizan al publicar la landing. La página ofrece la instalación del código
-actual y etiqueta por separado los paquetes anteriores.
+Subir los cambios y esperar al despliegue Pages. Verificar el enlace de inicio,
+crear un proyecto, añadir un elemento, recargar y exportar una prueba corta.
+Los ZIP v0.2.0-beta son paquetes anteriores, independientes de la versión web.
 
 Created totally free by @nacho_web3. Innovation is our flag.
