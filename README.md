@@ -19,6 +19,9 @@ El build necesita las dependencias del editor, contenido generado y FFmpeg/ffpro
 para indexar los packs de sonido públicos. Solo copia los packs CC0 incluidos en
 el código; no publica bibliotecas privadas, claves ni proyectos del autor.
 
+La sección `#novedades`, sus estilos `.lp-ai-*` y las imágenes `assets/demo-*.webp`
+son manuales: consérvalos al reexportar la landing.
+
 Subir los cambios y esperar al despliegue Pages. Verificar el enlace de inicio,
 crear un proyecto, añadir un elemento, recargar y exportar una prueba corta.
 Los ZIP v0.2.0-beta son paquetes anteriores, independientes de la versión web.
