@@ -19,11 +19,12 @@ El build necesita las dependencias del editor, contenido generado y FFmpeg/ffpro
 para indexar los packs de sonido públicos. Solo copia los packs CC0 incluidos en
 el código; no publica bibliotecas privadas, claves ni proyectos del autor.
 
-Conserva `index.html`, `assets/landing-current.css`, `assets/landing-app.js` y
-las imágenes `assets/demo-*.webp` al actualizar el bundle de `editor/`.
+Conserva `index.html`, `assets/landing-orbit.css`, `assets/landing-app.js`, la imagen
+`assets/elite-orbit.webp` y las imágenes de respaldo `assets/demo-*.webp` al actualizar
+el bundle de `editor/`.
 
 Después de desplegar en Pages, verifica el acceso al estudio automático, el menú
 móvil y la demo. En el editor manual, crea un proyecto, recarga y exporta una prueba corta.
-El ZIP v0.3.0-beta.1 se publica en GitHub Releases y se enlaza desde la sección de instalación.
+El ZIP v0.3.0-beta.2 se publica en GitHub Releases y se enlaza desde la sección de instalación.
 
 Created totally free by @nacho_web3. Innovation is our flag.

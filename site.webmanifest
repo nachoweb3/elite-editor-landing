@@ -4,8 +4,8 @@
 	"description": "Edita vídeo en el navegador con timeline, subtítulos y asistente IA. Beta abierta y gratuita.",
 	"start_url": "./",
 	"display": "standalone",
-	"background_color": "#04050a",
-	"theme_color": "#7b2ff7",
+	"background_color": "#0c0e0b",
+	"theme_color": "#0c0e0b",
 	"icons": [
 		{ "src": "assets/favicon-192.png", "sizes": "192x192", "type": "image/png" },
 		{ "src": "assets/favicon-512.png", "sizes": "512x512", "type": "image/png" },

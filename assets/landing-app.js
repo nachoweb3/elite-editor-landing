@@ -39,7 +39,7 @@ if (releaseLink && releaseStatus) {
 			releaseLink.textContent = "Ver versión y código fuente →";
 			releaseStatus.textContent = `${version} · sin paquete preparado para Windows x64. La guía explica cómo instalar desde el código fuente.`;
 		} catch {
-		releaseStatus.textContent = "No se pudo consultar GitHub. Puedes descargar esta beta con el enlace directo.";
+			releaseStatus.textContent = "No se pudo consultar GitHub. El enlace directo sigue disponible.";
 		}
 	}
 
@@ -155,23 +155,118 @@ if (transcript) {
 	const reset = options.querySelector("[data-demo-reset]");
 	const total = transcript.querySelector("[data-demo-total]");
 	const bar = transcript.querySelector("[data-demo-bar]");
+	const preview = transcript.querySelector(".demo-screen");
+	const caption = transcript.querySelector("[data-demo-caption]");
+	const clock = transcript.querySelector("[data-demo-clock]");
+	const track = transcript.querySelector("[data-demo-track]");
+	const scrub = transcript.querySelector("[data-demo-scrub]");
+	const play = transcript.querySelector("[data-demo-play]");
 	const duration = (line) => Number(line.dataset.duration);
 	const base = lines.reduce((sum, line) => sum + duration(line), 0);
 	const suggested = lines.filter((line) => line.querySelector("mark"));
 	const seconds = new Intl.NumberFormat("es", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 	const history = [];
 	let removed = new Set();
+	let keptLines = [];
+	let kept = base;
+	let position = 0;
+	let frame = null;
+	let started = 0;
+	let activeLine;
+	const segments = lines.map((line, index) => {
+		const clip = document.createElement("button");
+		clip.type = "button";
+		clip.className = "demo-segment";
+		clip.textContent = String(index + 1).padStart(2, "0");
+		clip.setAttribute("aria-label", `Ir a la frase ${index + 1}`);
+		clip.style.flexGrow = duration(line);
+		clip.style.flexBasis = "0";
+		clip.addEventListener("click", () => {
+			pause();
+			const segment = keptLines.find((item) => item.line === line);
+			if (segment) seek(segment.start);
+		});
+		track.append(clip);
+		return clip;
+	});
+
+	function timecode(value) {
+		const tenths = Math.round(value * 10);
+		return `${String(Math.floor(tenths / 600)).padStart(2, "0")}:${String(Math.floor(tenths / 10) % 60).padStart(2, "0")},${tenths % 10}`;
+	}
+
+	function seek(value) {
+		position = Math.min(kept, Math.max(0, value));
+		const current = keptLines.find((item) => position < item.start + duration(item.line)) ?? keptLines.at(-1);
+		if (activeLine !== current?.line) {
+			activeLine = current?.line;
+			caption.textContent = activeLine?.querySelector("span").textContent ?? "Recupera una frase para continuar.";
+			preview.style.setProperty("--demo-pan", `${42 + (current?.index ?? 0) * 6}%`);
+			lines.forEach((line, index) => {
+				line.toggleAttribute("data-current", line === current?.line);
+				segments[index].setAttribute("aria-current", String(line === current?.line));
+			});
+		}
+		const reading = `${timecode(position)} / ${timecode(kept)}`;
+		if (clock.textContent !== reading || !scrub.hasAttribute("aria-valuetext")) {
+			clock.textContent = reading;
+			scrub.value = String(position);
+			scrub.setAttribute("aria-valuetext", `${seconds.format(position)} de ${seconds.format(kept)} segundos`);
+		}
+		track.style.setProperty("--demo-progress", `${kept ? 100 * position / kept : 0}%`);
+	}
+
+	function pause() {
+		if (frame !== null) cancelAnimationFrame(frame);
+		frame = null;
+		play.setAttribute("aria-label", "Reproducir demostración");
+		play.firstElementChild.textContent = "▶";
+	}
+
+	function animate(now) {
+		seek((now - started) / 1000);
+		if (position >= kept) pause();
+		else frame = requestAnimationFrame(animate);
+	}
+
+	play.addEventListener("click", () => {
+		if (frame !== null) return pause();
+		if (!kept) return;
+		if (position >= kept) seek(0);
+		started = performance.now() - position * 1000;
+		play.setAttribute("aria-label", "Pausar demostración");
+		play.firstElementChild.textContent = "Ⅱ";
+		frame = requestAnimationFrame(animate);
+	});
+	scrub.addEventListener("input", () => {
+		pause();
+		seek(Number(scrub.value));
+	});
 
 	const render = () => {
-		lines.forEach((line) => line.setAttribute("aria-pressed", String(removed.has(line))));
+		pause();
+		keptLines = [];
+		kept = 0;
+		lines.forEach((line, index) => {
+			const cut = removed.has(line);
+			line.setAttribute("aria-pressed", String(cut));
+			segments[index].hidden = cut;
+			if (cut) return;
+			keptLines.push({ line, index, start: kept });
+			kept += duration(line);
+		});
 		const count = removed.size;
-		const saved = [...removed].reduce((sum, line) => sum + duration(line), 0);
-		const kept = Math.max(0, base - saved);
+		const saved = Math.max(0, base - kept);
 		total.textContent = `${count} ${count === 1 ? "frase" : "frases"} fuera · ${seconds.format(saved)} s menos de ${seconds.format(base)} s · quedan ${seconds.format(kept)} s`;
 		bar.style.width = `${base ? (kept / base) * 100 : 0}%`;
 		suggest.setAttribute("aria-disabled", String(suggested.every((line) => removed.has(line))));
 		undo.setAttribute("aria-disabled", String(!history.length));
 		reset.setAttribute("aria-disabled", String(!count));
+		play.disabled = !kept;
+		scrub.disabled = !kept;
+		scrub.max = String(kept);
+		track.toggleAttribute("data-empty", !kept);
+		seek(position);
 	};
 	const apply = (next) => {
 		history.push(removed);
@@ -195,5 +290,7 @@ if (transcript) {
 		if (removed.size) apply(new Set());
 	});
 	options.hidden = false;
+	play.hidden = false;
+	scrub.hidden = false;
 	render();
 }
