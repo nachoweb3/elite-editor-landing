@@ -1,0 +1,199 @@
+// Comportamiento de la landing estática, sin dependencias del editor.
+
+const releaseLink = document.querySelector("[data-release-link]");
+const releaseStatus = document.querySelector("[data-release-status]");
+const megabytes = new Intl.NumberFormat("es", { maximumFractionDigits: 1 });
+
+if (releaseLink && releaseStatus) {
+	const repository = "https://github.com/nachoweb3/elite-editor";
+	const releasesPage = `${repository}/releases`;
+	const releasesApi = "https://api.github.com/repos/nachoweb3/elite-editor/releases?per_page=10";
+	const isWindowsZip = (name) => /(?:^|[._-])(?:windows|win)[._-]?(?:x64|amd64|x86_64|64)(?=[._-]|$).*\.zip$/i.test(name);
+
+	async function updateRelease() {
+		try {
+			const response = await fetch(releasesApi, {
+				headers: { Accept: "application/vnd.github+json" },
+				signal: AbortSignal.timeout(5000),
+			});
+			if (!response.ok) throw new Error(String(response.status));
+			const releases = await response.json();
+			const release = releases.filter((item) => item.published_at && !item.draft)
+				.sort((a, b) => Date.parse(b.published_at) - Date.parse(a.published_at))[0];
+			if (!release) {
+				releaseLink.href = repository;
+				releaseLink.textContent = "Ver código fuente →";
+				releaseStatus.textContent = "Aún no hay versiones publicadas. Sigue la guía para preparar el estudio desde el código fuente.";
+				return;
+			}
+			const version = `${release.prerelease ? "Prelanzamiento" : "Versión"} ${release.tag_name}`;
+			const asset = release.assets?.find((item) => item.size > 0 && isWindowsZip(item.name)
+				&& item.browser_download_url?.startsWith(`${releasesPage}/download/`));
+			if (asset) {
+				releaseLink.href = asset.browser_download_url;
+				releaseLink.textContent = "Descargar ZIP para Windows →";
+				releaseStatus.textContent = `${version} · ${megabytes.format(asset.size / 1e6)} MB. Descomprime el ZIP en una carpeta.`;
+				return;
+			}
+			releaseLink.href = release.html_url?.startsWith(`${releasesPage}/tag/`) ? release.html_url : releasesPage;
+			releaseLink.textContent = "Ver versión y código fuente →";
+			releaseStatus.textContent = `${version} · sin paquete preparado para Windows x64. La guía explica cómo instalar desde el código fuente.`;
+		} catch {
+		releaseStatus.textContent = "No se pudo consultar GitHub. Puedes descargar esta beta con el enlace directo.";
+		}
+	}
+
+	void updateRelease();
+}
+
+const menuButton = document.querySelector(".lp-menu-btn");
+const menu = document.getElementById("lp-mobile-menu");
+
+if (menuButton && menu) {
+	const desktop = window.matchMedia("(min-width: 1120px)");
+	const setOpen = (open) => {
+		menu.hidden = !open;
+		menuButton.setAttribute("aria-expanded", String(open));
+		menuButton.setAttribute("aria-label", `${open ? "Cerrar" : "Abrir"} menú de navegación`);
+	};
+	menuButton.addEventListener("click", () => {
+		const open = menu.hidden;
+		setOpen(open);
+		if (open) menu.querySelector("a")?.focus();
+	});
+	menu.addEventListener("click", (event) => {
+		const link = event.target.closest("a");
+		if (!link || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+		setOpen(false);
+		if (!link.getAttribute("href").startsWith("#")) return;
+		const section = document.getElementById(link.hash.slice(1));
+		const heading = section?.querySelector("h2, h3") ?? section;
+		if (heading) {
+			event.preventDefault();
+			if (location.hash !== link.hash) history.pushState(null, "", link.hash);
+			heading.tabIndex = -1;
+			heading.focus({ preventScroll: true });
+			section.scrollIntoView();
+		}
+	});
+	const closeOutside = (event) => {
+		if (!menu.hidden && !menu.contains(event.target) && !menuButton.contains(event.target)) setOpen(false);
+	};
+	document.addEventListener("pointerdown", closeOutside);
+	document.addEventListener("focusin", closeOutside);
+	document.addEventListener("keydown", (event) => {
+		if (event.key !== "Escape" || menu.hidden) return;
+		event.preventDefault();
+		setOpen(false);
+		menuButton.focus();
+	});
+	desktop.addEventListener("change", ({ matches }) => {
+		if (!matches) return;
+		const hadFocus = menu.contains(document.activeElement) || document.activeElement === menuButton;
+		setOpen(false);
+		if (hadFocus) document.querySelector(".lp-links a")?.focus();
+	});
+}
+
+const engine = document.querySelector("[data-engine-state]");
+
+if (engine) {
+	const label = engine.querySelector("[data-engine-label]");
+	const check = engine.querySelector("[data-engine-check]");
+	const studioUrl = document.querySelector("[data-studio-url]").href;
+	const entryLinks = document.querySelectorAll("[data-studio-entry]");
+	const render = (state, message) => {
+		engine.dataset.engineState = state;
+		label.textContent = message;
+		check.disabled = state === "checking";
+		const ready = state === "on" || state === "degraded";
+		entryLinks.forEach((entry) => {
+			entry.setAttribute("href", ready ? studioUrl : "#abrir-editor");
+			if (ready) {
+				entry.target = "_blank";
+				entry.rel = "noreferrer";
+			} else {
+				entry.removeAttribute("target");
+				entry.removeAttribute("rel");
+			}
+		});
+	};
+	check.hidden = false;
+	check.addEventListener("click", async () => {
+		render("checking", "comprobando…");
+		try {
+			const response = await fetch("http://127.0.0.1:4310/api/health", {
+				cache: "no-store",
+				credentials: "omit",
+				signal: AbortSignal.timeout(6500),
+			});
+			if (!response.ok) throw new Error(String(response.status));
+			const { status, version, ffmpeg } = await response.json();
+			if (status !== "ok" && status !== "degraded") throw new Error("Respuesta inesperada");
+			const running = `motor en marcha${version ? ` · v${version}` : ""}`;
+			if (status === "degraded" || ffmpeg === false) {
+				render("degraded", `${running}. Añade FFmpeg al PATH y reinicia el estudio para exportar.`);
+			} else {
+				render("on", running);
+			}
+		} catch (error) {
+			const result = error.name === "TimeoutError" ? "la comprobación tardó demasiado" : "no se pudo conectar";
+			render("off", `${result}. Abre INICIAR_ESTUDIO.cmd y vuelve a comprobar. Si el navegador solicita acceso a la red local, permítelo.`);
+		} finally {
+			check.textContent = "Volver a comprobar";
+		}
+	});
+}
+
+const transcript = document.querySelector("[data-transcript]");
+
+if (transcript) {
+	const lines = [...transcript.querySelectorAll(".lp-line")];
+	const options = transcript.querySelector("[data-demo-actions]");
+	const suggest = options.querySelector("[data-demo-suggest]");
+	const undo = options.querySelector("[data-demo-undo]");
+	const reset = options.querySelector("[data-demo-reset]");
+	const total = transcript.querySelector("[data-demo-total]");
+	const bar = transcript.querySelector("[data-demo-bar]");
+	const duration = (line) => Number(line.dataset.duration);
+	const base = lines.reduce((sum, line) => sum + duration(line), 0);
+	const suggested = lines.filter((line) => line.querySelector("mark"));
+	const seconds = new Intl.NumberFormat("es", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+	const history = [];
+	let removed = new Set();
+
+	const render = () => {
+		lines.forEach((line) => line.setAttribute("aria-pressed", String(removed.has(line))));
+		const count = removed.size;
+		const saved = [...removed].reduce((sum, line) => sum + duration(line), 0);
+		const kept = Math.max(0, base - saved);
+		total.textContent = `${count} ${count === 1 ? "frase" : "frases"} fuera · ${seconds.format(saved)} s menos de ${seconds.format(base)} s · quedan ${seconds.format(kept)} s`;
+		bar.style.width = `${base ? (kept / base) * 100 : 0}%`;
+		suggest.setAttribute("aria-disabled", String(suggested.every((line) => removed.has(line))));
+		undo.setAttribute("aria-disabled", String(!history.length));
+		reset.setAttribute("aria-disabled", String(!count));
+	};
+	const apply = (next) => {
+		history.push(removed);
+		removed = next;
+		render();
+	};
+	lines.forEach((line) => line.addEventListener("click", () => {
+		const next = new Set(removed);
+		if (!next.delete(line)) next.add(line);
+		apply(next);
+	}));
+	suggest.addEventListener("click", () => {
+		if (suggested.some((line) => !removed.has(line))) apply(new Set([...removed, ...suggested]));
+	});
+	undo.addEventListener("click", () => {
+		if (!history.length) return;
+		removed = history.pop();
+		render();
+	});
+	reset.addEventListener("click", () => {
+		if (removed.size) apply(new Set());
+	});
+	options.hidden = false;
+	render();
+}
