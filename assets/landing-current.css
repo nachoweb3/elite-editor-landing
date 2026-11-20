@@ -743,6 +743,10 @@ button.xeno-chip:hover {
 .lp-chapters[data-on="true"] { opacity: 1; transform: none; }
 .lp-chapters b { color: var(--xeno-mint); font-weight: 500; margin-right: 1cqw; }
 .lp-note { margin-top: 0.8rem; text-align: center; font-family: var(--xeno-font-mono); font-size: 0.62rem; letter-spacing: 0.14em; color: #66729a; text-transform: uppercase; }
+.lp-project-note { margin: 1rem 0 0; padding: 0.85rem 1rem; border: 1px solid rgb(94 255 200 / 0.28); border-left: 3px solid var(--xeno-mint); border-radius: 0.6rem; background: rgb(94 255 200 / 0.06); color: #cdd8f4; font-size: 0.86rem; line-height: 1.55; }
+.lp-project-note b { color: #effff9; }
+.lp-project-note code { padding: 0.08rem 0.34rem; border-radius: 0.3rem; background: rgb(3 4 11 / 0.6); color: var(--xeno-mint); font-size: 0.82em; }
+@media (max-width: 640px) { .lp-project-note { font-size: 0.81rem; } }
 
 /* Floating stickers around the mockup */
 .lp-float { position: absolute; z-index: 5; pointer-events: none; filter: drop-shadow(0 18px 24px rgb(0 0 0 / 0.5)); animation: lp-bob 6.5s ease-in-out infinite; animation-delay: var(--d, 0s); width: var(--s, 150px); }
