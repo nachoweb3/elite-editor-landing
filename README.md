@@ -24,6 +24,6 @@ el bundle de `editor/`.
 
 Después de desplegar en Pages, verifica el acceso al estudio automático, el menú
 móvil y la demo. En el editor manual, crea un proyecto, recarga y exporta una prueba corta.
-El ZIP v0.3.0-beta.4 se publica en GitHub Releases y se enlaza desde la sección de instalación.
+El ZIP v0.3.0-beta.5 se publica en GitHub Releases y se enlaza desde la sección de instalación.
 
 Created totally free by @nacho_web3. Innovation is our flag.

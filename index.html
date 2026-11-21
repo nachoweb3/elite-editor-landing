@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Elite Editor Studio | Edición de vídeo local</title>
-	<meta name="description" content="Une grabaciones, revisa cortes y exporta vídeos y shorts. Elite Editor Studio es gratuito y funciona en tu equipo.">
+	<meta name="description" content="Edita con capas, fotogramas clave y multicámara, o monta automáticamente uno o varios vídeos. Elite Editor Studio es gratuito y funciona en tu equipo.">
 	<meta name="theme-color" content="#0c0e0b">
 	<link rel="canonical" href="https://nachoweb3.github.io/elite-editor-landing/">
 	<link rel="icon" href="assets/elite-mark.svg" type="image/svg+xml">
@@ -15,7 +15,7 @@
 	<meta property="og:url" content="https://nachoweb3.github.io/elite-editor-landing/">
 	<meta property="og:image" content="https://nachoweb3.github.io/elite-editor-landing/assets/elite-orbit.webp">
 	<meta name="twitter:card" content="summary_large_image">
-	<link rel="stylesheet" href="assets/landing-orbit.css?v=4.1">
+	<link rel="stylesheet" href="assets/landing-orbit.css?v=4.2">
 	<script src="assets/landing-app.js?v=orbit-4.1" defer></script>
 </head>
 <body>
@@ -24,13 +24,13 @@
 		<div class="wrap header-inner">
 			<a class="wordmark" href="#inicio" aria-label="Elite Editor Studio, inicio"><span class="brand-mark" aria-hidden="true"></span><span>ELITE<span class="wordmark-editor"> EDITOR</span></span></a>
 			<nav class="lp-links" aria-label="Navegación principal">
-				<a href="#funciones">Estudio</a><a href="#demo">Demo</a><a href="#instalar">Instalación</a>
+				<a href="#novedades">Novedades</a><a href="#demo">Demo</a><a href="#instalar">Instalación</a>
 			</nav>
 			<a class="btn btn-outline header-launch" href="#abrir-editor" data-studio-entry data-open-label="Abrir Studio"><span data-studio-entry-label>Obtener Studio</span> <span aria-hidden="true">↗</span></a>
 			<button type="button" class="lp-menu-btn" aria-controls="lp-mobile-menu" aria-expanded="false" aria-label="Abrir menú de navegación"><span></span><span></span></button>
 		</div>
 		<nav class="mobile-menu" id="lp-mobile-menu" aria-label="Navegación móvil" hidden>
-			<a href="#funciones">Estudio</a><a href="#demo">Demo interactiva</a><a href="#instalar">Instalación</a><a href="#abrir-editor" data-studio-entry data-open-label="Abrir Studio automático"><span data-studio-entry-label>Obtener Studio automático</span> <span aria-hidden="true">↗</span></a>
+			<a href="#novedades">Novedades</a><a href="#demo">Demo interactiva</a><a href="#instalar">Instalación</a><a href="#abrir-editor" data-studio-entry data-open-label="Abrir Studio automático"><span data-studio-entry-label>Obtener Studio automático</span> <span aria-hidden="true">↗</span></a>
 		</nav>
 	</header>
 	<main id="contenido" tabindex="-1">
@@ -39,7 +39,7 @@
 				<div class="hero-copy">
 					<p class="eyebrow"><span class="signal" aria-hidden="true"></span> Estudio de vídeo local</p>
 					<h1 id="hero-title">Del bruto<br>al <em>corte final.</em></h1>
-					<p class="hero-description">Une tus grabaciones, revisa el montaje automático y conserva la resolución y los fps de origen con la opción «Como el original».</p>
+					<p class="hero-description">Monta uno o varios vídeos en el orden que tú elijas. Después afina las capas, el sonido y los cortes en la misma línea de tiempo.</p>
 					<div class="hero-actions">
 						<a class="btn btn-primary" href="#abrir-editor" data-studio-entry data-open-label="Abrir Studio automático"><span data-studio-entry-label>Obtener Studio automático</span> <span aria-hidden="true">↗</span></a>
 						<a class="btn btn-text" href="#demo"><span class="play-icon" aria-hidden="true">▶</span> Probar la demo</a>
@@ -70,8 +70,36 @@
 			</div>
 		</section>
 
+		<section class="section wrap release-section" id="novedades" aria-labelledby="release-heading">
+			<div class="section-heading">
+				<p class="eyebrow eyebrow-muted">Novedades de la beta 5</p>
+				<h2 id="release-heading">Más control sobre <em>cada corte.</em></h2>
+				<p>Edición avanzada y montaje automático en el mismo Studio para Windows.</p>
+			</div>
+			<div class="release-automatic">
+				<div>
+					<h3>¿Un vídeo o varios?</h3>
+					<p>El editor automático te pregunta qué vas a montar. Si eliges varios vídeos, asigna un número a cada archivo, revisa la secuencia y confirma el orden antes de empezar.</p>
+				</div>
+				<ol aria-label="Ejemplo de orden de montaje">
+					<li>Intro</li><li>Demostración</li><li>Cierre</li>
+				</ol>
+			</div>
+			<ul class="release-grid">
+				<li><h3>Capas de vídeo e imagen</h3><p>Apila recursos, cambia su orden y colócalos sobre el vídeo desde el monitor.</p></li>
+				<li><h3>Fotogramas clave</h3><p>Marca rombos en la línea de tiempo para animar la posición, la escala y la opacidad.</p></li>
+				<li><h3>Velocidad y rampas</h3><p>Acelera o ralentiza por tramos. Studio conserva el tono de la voz y sincroniza los subtítulos.</p></li>
+				<li><h3>Máscaras y recorte de sujeto</h3><p>Dibuja una máscara, sigue su movimiento o separa el sujeto en un tramo corto.</p></li>
+				<li><h3>Mezclador de audio</h3><p>Mide niveles y ajusta ecualización, compresión y volumen a lo largo del montaje.</p></li>
+				<li><h3>Multicámara</h3><p>Sincroniza dos tomas por audio y cambia de cámara conservando la pista maestra.</p></li>
+				<li><h3>Paneles ajustables</h3><p>Arrastra los separadores de la biblioteca, el inspector y la línea de tiempo. Studio recuerda la distribución.</p></li>
+				<li><h3>Subtítulos y recursos IA</h3><p>Edita bloques de texto con 18 fuentes, reutiliza tu kit de marca y guarda los resultados de IA en la galería.</p></li>
+			</ul>
+			<a class="btn btn-outline" href="#instalar">Descargar la beta para Windows <span aria-hidden="true">↓</span></a>
+		</section>
+
 		<section class="section wrap tool-section" id="funciones">
-			<div class="section-heading" id="novedades">
+			<div class="section-heading">
 				<p class="eyebrow eyebrow-muted">Flujo de trabajo</p>
 				<h2>Tu material,<br><em>bien montado.</em></h2>
 				<p>Studio reúne el montaje automático y la edición manual en la misma línea de tiempo.</p>
@@ -156,10 +184,10 @@
 				<div class="setup-flow">
 					<div class="install-platform"><span class="windows-icon" aria-hidden="true"></span> WINDOWS X64</div>
 					<h3>Elite Editor Studio</h3>
-					<p data-release-status role="status">Beta v0.3.0-beta.4 · Descomprime el ZIP en una carpeta.</p>
+					<p data-release-status role="status">Beta v0.3.0-beta.5 · Descomprime el ZIP en una carpeta.</p>
 					<div class="install-actions">
-						<a class="btn btn-primary" href="https://github.com/nachoweb3/elite-editor/releases/download/v0.3.0-beta.4/Elite-Editor-Windows-x64-v0.3.0-beta.4.zip" data-release-link data-release-tag="v0.3.0-beta.4">Descargar ZIP para Windows <span aria-hidden="true">↓</span></a>
-						<a class="btn btn-text" href="https://github.com/nachoweb3/elite-editor/blob/v0.3.0-beta.4/studio/README.md">Guía de instalación <span aria-hidden="true">↗</span></a>
+						<a class="btn btn-primary" href="https://github.com/nachoweb3/elite-editor/releases/download/v0.3.0-beta.5/Elite-Editor-Windows-x64-v0.3.0-beta.5.zip" data-release-link data-release-tag="v0.3.0-beta.5">Descargar ZIP para Windows <span aria-hidden="true">↓</span></a>
+						<a class="btn btn-text" href="https://github.com/nachoweb3/elite-editor/blob/v0.3.0-beta.5/studio/README.md">Guía de instalación <span aria-hidden="true">↗</span></a>
 					</div>
 					<ol class="setup-steps">
 						<li>Instala Node.js 24+ y añade FFmpeg y ffprobe al PATH.</li>

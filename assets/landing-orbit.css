@@ -155,6 +155,22 @@ h1 em, h2 em { color: var(--accent); font-style: normal; }
 .section-heading { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr); align-items: end; column-gap: 2.5rem; row-gap: .1rem; margin-bottom: 2.4rem; }
 .section-heading .eyebrow { grid-column: 1/-1; margin-bottom: 1rem; }
 .section-heading > p:last-child { max-width: 30rem; color: var(--muted); font-size: 1.04rem; }
+.release-section { padding-bottom: 0; }
+.release-automatic {
+	display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(15rem, .6fr); gap: 1.5rem; align-items: center;
+	padding: clamp(1.1rem, 2.4vw, 2rem); border: 1px solid #546137; border-radius: .5rem;
+	background: linear-gradient(115deg, #222b17, var(--panel) 75%);
+}
+.release-automatic p { color: var(--muted); margin-top: .6rem; max-width: 46rem; }
+.release-automatic ol { display: grid; gap: .32rem; margin: 0; padding-inline-start: 1.6rem; font: .83rem/1.4 var(--mono); }
+.release-automatic li { padding: .3rem .55rem; border: 1px solid var(--line); background: var(--canvas); border-radius: .22rem; }
+.release-automatic li::marker { color: var(--accent); }
+.release-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .75rem; list-style: none; padding: 0; margin: .8rem 0 1.15rem; }
+.release-grid li { padding: 1.1rem; border: 1px solid var(--line); border-radius: .42rem; background: var(--panel); }
+.release-grid h3 { font-size: 1.2rem; line-height: 1.15; letter-spacing: -.025em; }
+.release-grid p { color: var(--muted); font-size: .89rem; margin-top: .45rem; }
+@media (max-width: 1000px) { .release-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 620px) { .release-automatic, .release-grid { grid-template-columns: minmax(0, 1fr); } }
 .tools-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .85rem; }
 .tool-card { display: flex; flex-direction: column; overflow: hidden; min-width: 0; background: var(--panel); border: 1px solid var(--line); border-radius: .5rem; }
 .tool-copy { flex: 1; padding: 1.35rem 1.25rem 1.5rem; border-top: 1px solid var(--line); }
