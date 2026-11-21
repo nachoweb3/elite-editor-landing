@@ -95,23 +95,25 @@ if (engine) {
 	const label = engine.querySelector("[data-engine-label]");
 	const check = engine.querySelector("[data-engine-check]");
 	const studioLink = document.querySelector("[data-studio-url]");
-	const entryLinks = document.querySelectorAll("[data-studio-entry]");
+	const entries = [...document.querySelectorAll("[data-studio-entry]")].map((link) => {
+		const label = link.querySelector("[data-studio-entry-label]");
+		return { link, label, installLabel: label.textContent };
+	});
 	const render = (state, message, studioUrl) => {
 		engine.dataset.engineState = state;
 		label.textContent = message;
 		check.disabled = state === "checking";
 		studioLink.hidden = !studioUrl;
 		if (studioUrl) studioLink.href = studioUrl;
-		entryLinks.forEach((entry) => {
-			entry.setAttribute("href", studioUrl || "#abrir-editor");
-			const entryLabel = entry.querySelector("[data-studio-entry-label]");
-			if (entryLabel) entryLabel.textContent = studioUrl ? "Abrir Studio automático" : "Obtener Studio automático";
+		entries.forEach(({ link, label, installLabel }) => {
+			link.setAttribute("href", studioUrl || "#abrir-editor");
+			label.textContent = studioUrl ? link.dataset.openLabel : installLabel;
 			if (studioUrl) {
-				entry.target = "_blank";
-				entry.rel = "noreferrer";
+				link.target = "_blank";
+				link.rel = "noreferrer";
 			} else {
-				entry.removeAttribute("target");
-				entry.removeAttribute("rel");
+				link.removeAttribute("target");
+				link.removeAttribute("rel");
 			}
 		});
 	};

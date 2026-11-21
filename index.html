@@ -15,8 +15,8 @@
 	<meta property="og:url" content="https://nachoweb3.github.io/elite-editor-landing/">
 	<meta property="og:image" content="https://nachoweb3.github.io/elite-editor-landing/assets/elite-orbit.webp">
 	<meta name="twitter:card" content="summary_large_image">
-	<link rel="stylesheet" href="assets/landing-orbit.css?v=4">
-	<script src="assets/landing-app.js?v=orbit-4" defer></script>
+	<link rel="stylesheet" href="assets/landing-orbit.css?v=4.1">
+	<script src="assets/landing-app.js?v=orbit-4.1" defer></script>
 </head>
 <body>
 	<a class="skip-link" href="#contenido">Saltar al contenido</a>
@@ -39,7 +39,7 @@
 				<div class="hero-copy">
 					<p class="eyebrow"><span class="signal" aria-hidden="true"></span> Estudio de vídeo local</p>
 					<h1 id="hero-title">Del bruto<br>al <em>corte final.</em></h1>
-					<p class="hero-description">Une tus grabaciones, deja que Studio prepare el montaje y revisa cada corte con la resolución y los fps de origen.</p>
+					<p class="hero-description">Une tus grabaciones, revisa el montaje automático y conserva la resolución y los fps de origen con la opción «Como el original».</p>
 					<div class="hero-actions">
 						<a class="btn btn-primary" href="#abrir-editor" data-studio-entry data-open-label="Abrir Studio automático"><span data-studio-entry-label>Obtener Studio automático</span> <span aria-hidden="true">↗</span></a>
 						<a class="btn btn-text" href="#demo"><span class="play-icon" aria-hidden="true">▶</span> Probar la demo</a>
@@ -91,8 +91,12 @@
 				</article>
 			</div>
 			<aside class="resource-note" aria-labelledby="resource-title">
-				<div><h3 id="resource-title">Mete contexto en el plano</h3><p>Conecta tu clave de Pexels para buscar clips de apoyo o fotos y consultar los créditos del material.</p></div>
-				<span aria-hidden="true">▶</span>
+				<div class="resource-copy">
+					<p class="eyebrow eyebrow-muted">Planos de apoyo</p>
+					<h3 id="resource-title">Encuentra el plano que falta.</h3>
+					<p>Conecta tu clave de Pexels para buscar clips por contexto o usar una foto. Studio conserva los créditos del material que añades.</p>
+				</div>
+				<div class="resource-visual" aria-hidden="true"><img src="assets/studio-lens.webp" width="1120" height="630" alt="" loading="lazy" decoding="async"></div>
 			</aside>
 		</section>
 
@@ -180,6 +184,7 @@
 			<h2>Preguntas frecuentes</h2>
 			<div>
 				<details><summary>¿Necesito una cuenta?</summary><p>Studio utiliza una cuenta local para tus proyectos.</p></details>
+				<details><summary>¿Cómo cambio el aspecto de Studio?</summary><p>En el menú Tema visual del estudio instalado puedes elegir Azul cobalto o Lima. Los dos temas incluyen las mismas herramientas de montaje automático.</p></details>
 				<details><summary>¿Qué puedo hacer sin Whisper?</summary><p>Unir clips, editar a mano y exportar con FFmpeg. Whisper permite transcribir y montar de forma automática grabaciones con audio.</p></details>
 				<details><summary>¿Puedo mover un montaje a otro equipo?</summary><p>Usa Paquete .zip en Studio para guardar el montaje y los recursos que utiliza. Puedes recuperarlo desde la galería multimedia.</p></details>
 				<details><summary>¿Dónde están mis proyectos del editor web anterior?</summary><p>Siguen en el navegador donde los creaste. <a class="legacy-link" href="./editor/#/projects">Editor manual (sin automatización) <span aria-hidden="true">↗</span></a></p></details>

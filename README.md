@@ -18,8 +18,8 @@ El build necesita las dependencias del editor, contenido generado y FFmpeg/ffpro
 para indexar los packs de sonido públicos. Solo copia los packs CC0 incluidos en
 el código; no publica bibliotecas privadas, claves ni proyectos del autor.
 
-Conserva `index.html`, `assets/landing-orbit.css`, `assets/landing-app.js`, la imagen
-`assets/elite-orbit.webp` y las imágenes de respaldo `assets/demo-*.webp` al actualizar
+Conserva `index.html`, `assets/landing-orbit.css`, `assets/landing-app.js`, las imágenes
+`assets/elite-orbit.webp` y `assets/studio-lens.webp` y los respaldos `assets/demo-*.webp` al actualizar
 el bundle de `editor/`.
 
 Después de desplegar en Pages, verifica el acceso al estudio automático, el menú
