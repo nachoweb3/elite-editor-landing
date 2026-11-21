@@ -15,8 +15,8 @@
 	<meta property="og:url" content="https://nachoweb3.github.io/elite-editor-landing/">
 	<meta property="og:image" content="https://nachoweb3.github.io/elite-editor-landing/assets/elite-orbit.webp">
 	<meta name="twitter:card" content="summary_large_image">
-	<link rel="stylesheet" href="assets/landing-orbit.css?v=2">
-	<script src="assets/landing-app.js?v=orbit-2" defer></script>
+	<link rel="stylesheet" href="assets/landing-orbit.css?v=4">
+	<script src="assets/landing-app.js?v=orbit-4" defer></script>
 </head>
 <body>
 	<a class="skip-link" href="#contenido">Saltar al contenido</a>
@@ -26,11 +26,11 @@
 			<nav class="lp-links" aria-label="Navegación principal">
 				<a href="#funciones">Estudio</a><a href="#demo">Demo</a><a href="#instalar">Instalación</a>
 			</nav>
-			<a class="btn btn-outline header-launch" href="#abrir-editor" data-studio-entry>Abrir Studio <span aria-hidden="true">↗</span></a>
+			<a class="btn btn-outline header-launch" href="#abrir-editor" data-studio-entry data-open-label="Abrir Studio"><span data-studio-entry-label>Obtener Studio</span> <span aria-hidden="true">↗</span></a>
 			<button type="button" class="lp-menu-btn" aria-controls="lp-mobile-menu" aria-expanded="false" aria-label="Abrir menú de navegación"><span></span><span></span></button>
 		</div>
 		<nav class="mobile-menu" id="lp-mobile-menu" aria-label="Navegación móvil" hidden>
-			<a href="#funciones">Estudio</a><a href="#demo">Demo interactiva</a><a href="#instalar">Instalación</a><a href="#abrir-editor" data-studio-entry>Abrir Studio <span aria-hidden="true">↗</span></a>
+			<a href="#funciones">Estudio</a><a href="#demo">Demo interactiva</a><a href="#instalar">Instalación</a><a href="#abrir-editor" data-studio-entry data-open-label="Abrir Studio automático"><span data-studio-entry-label>Obtener Studio automático</span> <span aria-hidden="true">↗</span></a>
 		</nav>
 	</header>
 	<main id="contenido" tabindex="-1">
@@ -39,9 +39,9 @@
 				<div class="hero-copy">
 					<p class="eyebrow"><span class="signal" aria-hidden="true"></span> Estudio de vídeo local</p>
 					<h1 id="hero-title">Del bruto<br>al <em>corte final.</em></h1>
-					<p class="hero-description">Une tus grabaciones, deja que Studio prepare el montaje y quédate con el control de cada corte.</p>
+					<p class="hero-description">Une tus grabaciones, deja que Studio prepare el montaje y revisa cada corte con la resolución y los fps de origen.</p>
 					<div class="hero-actions">
-						<a class="btn btn-primary" href="#abrir-editor" data-studio-entry>Abrir Studio <span aria-hidden="true">↗</span></a>
+						<a class="btn btn-primary" href="#abrir-editor" data-studio-entry data-open-label="Abrir Studio automático"><span data-studio-entry-label>Obtener Studio automático</span> <span aria-hidden="true">↗</span></a>
 						<a class="btn btn-text" href="#demo"><span class="play-icon" aria-hidden="true">▶</span> Probar la demo</a>
 					</div>
 					<p class="hero-meta">Windows x64 <span aria-hidden="true">/</span> Gratuito <span aria-hidden="true">/</span> Código abierto</p>
@@ -83,7 +83,7 @@
 				</article>
 				<article class="tool-card">
 					<div class="card-graphic transcript-graphic" aria-hidden="true"><span><i>00:04</i> Empecemos por aquí.</span><span><i>00:08</i> <s>Eh, bueno, a ver.</s></span><span><i>00:12</i> Este es el resultado.</span></div>
-					<div class="tool-copy"><h3>Corta con el texto</h3><p>Localiza una frase por su transcripción y revisa los cortes y capítulos propuestos.</p></div>
+					<div class="tool-copy"><h3>Corta con el texto</h3><p>Localiza frases en la transcripción y elige fundidos, barridos o aperturas para los cambios de sección.</p></div>
 				</article>
 				<article class="tool-card" id="auto-shorts">
 					<div class="card-graphic shorts-graphic" aria-hidden="true"><div><span>9:16</span><i></i><i></i></div><div><span>MP4</span><span>SRT</span><span>JPG</span></div></div>
@@ -145,46 +145,44 @@
 		<section class="section wrap install" id="instalar">
 			<div class="section-heading">
 				<p class="eyebrow eyebrow-muted">Instalación</p>
-				<h2>Elige cómo<br><em>empezar.</em></h2>
-				<p>Usa el estudio de escritorio para automatizar o abre la edición manual en el navegador.</p>
+				<h2>Abre tu<br><em>estudio automático.</em></h2>
+				<p>Studio se ejecuta en Windows y abre su interfaz en tu navegador. Une, monta y exporta desde ese mismo estudio.</p>
 			</div>
-			<div class="install-grid">
-				<article class="download-card" id="abrir-editor">
+			<article class="download-card" id="abrir-editor">
+				<div class="setup-flow">
 					<div class="install-platform"><span class="windows-icon" aria-hidden="true"></span> WINDOWS X64</div>
 					<h3>Elite Editor Studio</h3>
-					<p data-release-status role="status">Beta v0.3.0-beta.3 · Descomprime el ZIP en una carpeta.</p>
+					<p data-release-status role="status">Beta v0.3.0-beta.4 · Descomprime el ZIP en una carpeta.</p>
 					<div class="install-actions">
-						<a class="btn btn-primary" href="https://github.com/nachoweb3/elite-editor/releases/download/v0.3.0-beta.3/Elite-Editor-Windows-x64-v0.3.0-beta.3.zip" data-release-link>Descargar ZIP para Windows <span aria-hidden="true">↓</span></a>
-						<a class="btn btn-text" href="https://github.com/nachoweb3/elite-editor/blob/v0.3.0-beta.3/studio/README.md">Guía de instalación <span aria-hidden="true">↗</span></a>
+						<a class="btn btn-primary" href="https://github.com/nachoweb3/elite-editor/releases/download/v0.3.0-beta.4/Elite-Editor-Windows-x64-v0.3.0-beta.4.zip" data-release-link data-release-tag="v0.3.0-beta.4">Descargar ZIP para Windows <span aria-hidden="true">↓</span></a>
+						<a class="btn btn-text" href="https://github.com/nachoweb3/elite-editor/blob/v0.3.0-beta.4/studio/README.md">Guía de instalación <span aria-hidden="true">↗</span></a>
 					</div>
 					<ol class="setup-steps">
-						<li>Instala Node.js 24+ y FFmpeg con ffprobe.</li>
-						<li>Descomprime el ZIP y ejecuta <code>INICIAR_ESTUDIO.cmd</code>.</li>
-						<li>Prepara Whisper si quieres montar grabaciones con audio.</li>
+						<li>Instala Node.js 24+ y añade FFmpeg y ffprobe al PATH.</li>
+						<li>Extrae todo el ZIP a una carpeta y ejecuta <code>INICIAR_ESTUDIO.cmd</code>.</li>
+						<li>La pestaña del estudio automático se abre al arrancar.</li>
 					</ol>
-					<p class="setup-note">El primer arranque instala las dependencias de npm con Internet.</p>
+					<p class="setup-note">El ZIP incluye la interfaz preparada. Para montar grabaciones con audio, configura Whisper desde la guía.</p>
+				</div>
+				<div class="studio-access">
+					<h4>¿Studio ya está abierto?</h4>
 					<div class="local-check" data-engine-state="unknown">
-						<div><b>Motor local</b><p role="status" data-engine-label>Puedes comprobar la conexión desde aquí.</p></div>
+						<div><b>Conexión local</b><p role="status" data-engine-label>Comprueba si el estudio está listo en este equipo.</p></div>
 						<button type="button" class="btn btn-outline" data-engine-check hidden>Comprobar conexión</button>
 					</div>
-					<a class="launch-inline" href="http://127.0.0.1:5173/?workspace=automatic" data-studio-url target="_blank" rel="noreferrer">Ya lo tengo abierto · Entrar a Studio <span aria-hidden="true">↗</span></a>
-				</article>
-				<article class="browser-card">
-					<div class="install-platform"><span class="browser-icon" aria-hidden="true"></span> NAVEGADOR</div>
-					<h3>Editor web</h3>
-					<p>Abre una línea de tiempo manual para cortar y organizar tus clips. Tus proyectos se guardan en este navegador.</p>
-					<a class="btn btn-outline" href="./editor/#/projects">Abrir editor web <span aria-hidden="true">↗</span></a>
+					<a class="launch-inline" href="http://127.0.0.1:5173/?workspace=automatic" data-studio-url target="_blank" rel="noreferrer" hidden>Abrir Studio automático <span aria-hidden="true">↗</span></a>
 					<div class="privacy-card" id="local"><b>El material se queda en tu equipo.</b><p>El estudio procesa y guarda las grabaciones en tu ordenador. Las integraciones externas son opcionales.</p></div>
-				</article>
-			</div>
+				</div>
+			</article>
 		</section>
 
 		<section id="faq" class="section wrap faq">
 			<h2>Preguntas frecuentes</h2>
 			<div>
-				<details><summary>¿Necesito una cuenta?</summary><p>Studio utiliza una cuenta local para tus proyectos. El editor web funciona sin cuenta.</p></details>
+				<details><summary>¿Necesito una cuenta?</summary><p>Studio utiliza una cuenta local para tus proyectos.</p></details>
 				<details><summary>¿Qué puedo hacer sin Whisper?</summary><p>Unir clips, editar a mano y exportar con FFmpeg. Whisper permite transcribir y montar de forma automática grabaciones con audio.</p></details>
 				<details><summary>¿Puedo mover un montaje a otro equipo?</summary><p>Usa Paquete .zip en Studio para guardar el montaje y los recursos que utiliza. Puedes recuperarlo desde la galería multimedia.</p></details>
+				<details><summary>¿Dónde están mis proyectos del editor web anterior?</summary><p>Siguen en el navegador donde los creaste. <a class="legacy-link" href="./editor/#/projects">Editor manual (sin automatización) <span aria-hidden="true">↗</span></a></p></details>
 			</div>
 		</section>
 	</main>

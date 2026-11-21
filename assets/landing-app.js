@@ -7,7 +7,8 @@ const megabytes = new Intl.NumberFormat("es", { maximumFractionDigits: 1 });
 if (releaseLink && releaseStatus) {
 	const repository = "https://github.com/nachoweb3/elite-editor";
 	const releasesPage = `${repository}/releases`;
-	const releasesApi = "https://api.github.com/repos/nachoweb3/elite-editor/releases?per_page=10";
+	const tag = releaseLink.dataset.releaseTag;
+	const releasesApi = `https://api.github.com/repos/nachoweb3/elite-editor/releases/tags/${encodeURIComponent(tag)}`;
 	const isWindowsZip = (name) => /(?:^|[._-])(?:windows|win)[._-]?(?:x64|amd64|x86_64|64)(?=[._-]|$).*\.zip$/i.test(name);
 
 	async function updateRelease() {
@@ -17,15 +18,8 @@ if (releaseLink && releaseStatus) {
 				signal: AbortSignal.timeout(5000),
 			});
 			if (!response.ok) throw new Error(String(response.status));
-			const releases = await response.json();
-			const release = releases.filter((item) => item.published_at && !item.draft)
-				.sort((a, b) => Date.parse(b.published_at) - Date.parse(a.published_at))[0];
-			if (!release) {
-				releaseLink.href = repository;
-				releaseLink.textContent = "Ver código fuente →";
-				releaseStatus.textContent = "Aún no hay versiones publicadas. Sigue la guía para preparar el estudio desde el código fuente.";
-				return;
-			}
+			const release = await response.json();
+			if (release.tag_name !== tag || !release.published_at || release.draft) return;
 			const version = `${release.prerelease ? "Prelanzamiento" : "Versión"} ${release.tag_name}`;
 			const asset = release.assets?.find((item) => item.size > 0 && isWindowsZip(item.name)
 				&& item.browser_download_url?.startsWith(`${releasesPage}/download/`));
@@ -35,9 +29,9 @@ if (releaseLink && releaseStatus) {
 				releaseStatus.textContent = `${version} · ${megabytes.format(asset.size / 1e6)} MB. Descomprime el ZIP en una carpeta.`;
 				return;
 			}
-			releaseLink.href = release.html_url?.startsWith(`${releasesPage}/tag/`) ? release.html_url : releasesPage;
+			releaseLink.href = `${releasesPage}/tag/${encodeURIComponent(tag)}`;
 			releaseLink.textContent = "Ver versión y código fuente →";
-			releaseStatus.textContent = `${version} · sin paquete preparado para Windows x64. La guía explica cómo instalar desde el código fuente.`;
+			releaseStatus.textContent = `${version} · sin paquete preparado para Windows x64.`;
 		} catch {
 			releaseStatus.textContent = "No se pudo consultar GitHub. El enlace directo sigue disponible.";
 		}
@@ -100,16 +94,19 @@ const engine = document.querySelector("[data-engine-state]");
 if (engine) {
 	const label = engine.querySelector("[data-engine-label]");
 	const check = engine.querySelector("[data-engine-check]");
-	const studioUrl = document.querySelector("[data-studio-url]").href;
+	const studioLink = document.querySelector("[data-studio-url]");
 	const entryLinks = document.querySelectorAll("[data-studio-entry]");
-	const render = (state, message) => {
+	const render = (state, message, studioUrl) => {
 		engine.dataset.engineState = state;
 		label.textContent = message;
 		check.disabled = state === "checking";
-		const ready = state === "on" || state === "degraded";
+		studioLink.hidden = !studioUrl;
+		if (studioUrl) studioLink.href = studioUrl;
 		entryLinks.forEach((entry) => {
-			entry.setAttribute("href", ready ? studioUrl : "#abrir-editor");
-			if (ready) {
+			entry.setAttribute("href", studioUrl || "#abrir-editor");
+			const entryLabel = entry.querySelector("[data-studio-entry-label]");
+			if (entryLabel) entryLabel.textContent = studioUrl ? "Abrir Studio automático" : "Obtener Studio automático";
+			if (studioUrl) {
 				entry.target = "_blank";
 				entry.rel = "noreferrer";
 			} else {
@@ -122,23 +119,31 @@ if (engine) {
 	check.addEventListener("click", async () => {
 		render("checking", "comprobando…");
 		try {
-			const response = await fetch("http://127.0.0.1:4310/api/health", {
-				cache: "no-store",
-				credentials: "omit",
-				signal: AbortSignal.timeout(6500),
-			});
-			if (!response.ok) throw new Error(String(response.status));
-			const { status, version, ffmpeg } = await response.json();
-			if (status !== "ok" && status !== "degraded") throw new Error("Respuesta inesperada");
+			const results = await Promise.all([5173, 5174, 5175].map(async (port) => {
+				try {
+					const origin = `http://127.0.0.1:${port}`;
+					const response = await fetch(`${origin}/api/health`, {
+						cache: "no-store", credentials: "omit", signal: AbortSignal.timeout(4200),
+					});
+					if (!response.ok) return null;
+					const data = await response.json();
+					if (data.edition !== "studio" || data.launcher !== "standalone" || !["ok", "degraded"].includes(data.status)) return null;
+					return { ...data, studioUrl: `${origin}/?workspace=automatic` };
+				} catch {
+					return null;
+				}
+			}));
+			const ready = results.find(Boolean);
+			if (!ready) throw new Error("No hay un Studio compatible abierto");
+			const { status, version, ffmpeg, studioUrl } = ready;
 			const running = `motor en marcha${version ? ` · v${version}` : ""}`;
 			if (status === "degraded" || ffmpeg === false) {
-				render("degraded", `${running}. Añade FFmpeg al PATH y reinicia el estudio para exportar.`);
+				render("degraded", `${running}. Añade FFmpeg al PATH y reinicia el estudio para exportar.`, studioUrl);
 			} else {
-				render("on", running);
+				render("on", running, studioUrl);
 			}
-		} catch (error) {
-			const result = error.name === "TimeoutError" ? "la comprobación tardó demasiado" : "no se pudo conectar";
-			render("off", `${result}. Abre INICIAR_ESTUDIO.cmd y vuelve a comprobar. Si el navegador solicita acceso a la red local, permítelo.`);
+		} catch {
+			render("off", "Abre INICIAR_ESTUDIO.cmd y vuelve a comprobar. Si tu navegador solicita acceso a la red local, permítelo.");
 		} finally {
 			check.textContent = "Volver a comprobar";
 		}
